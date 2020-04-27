@@ -4,6 +4,8 @@ class TransactionInfoDto {
   int transactionId;
   String transactionType;
   int transactionTypeId;
+  String transactionCategoryName;
+  int transactionCategoryId;
   String transactionNote;
   DateTime transactionDate;
   double transactionAmount;
@@ -12,6 +14,8 @@ class TransactionInfoDto {
       {this.transactionId,
       this.transactionType,
       this.transactionTypeId,
+      this.transactionCategoryName,
+      this.transactionCategoryId,
       this.transactionNote,
       this.transactionDate,
       this.transactionAmount});
@@ -21,6 +25,8 @@ class TransactionInfoDto {
       transactionId: json['id'],
       transactionType: json['transaction_type_name'],
       transactionTypeId: json['transaction_type_id'] as int,
+      transactionCategoryName: json['transaction_cat_name'],
+      transactionCategoryId: json['transaction_cat_id'] as int,
       transactionNote: json['transaction_note'],
       transactionAmount: json['transaction_amount'] as double,
     );

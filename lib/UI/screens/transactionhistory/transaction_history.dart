@@ -1,3 +1,4 @@
+import 'package:expenses/UI/helper/date_formatter.dart';
 import 'package:expenses/UI/screens/transactionhistory/transaction_history_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -123,7 +124,8 @@ class TransactionInfoDtoList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Scaffold(
             body: Center(
-              child: Text('In TransactionInfoDtoList: ' + snapshot.error.toString()),
+              child: Text(
+                  'In TransactionInfoDtoList: ' + snapshot.error.toString()),
             ),
           );
         } else {
@@ -150,7 +152,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 4,
       //todo color: [add here the transaction type color? maybe]
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -159,10 +161,30 @@ class TransactionInfoDtoTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(transactionInfo.transactionType),
-                  Text(transactionInfo.transactionId.toString()),
-                  Text(DoubleHelper.convertDobleTo2DecimalPlaces(
-                      transactionInfo.transactionAmount)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(transactionInfo.transactionType),
+                      Text(
+                        getOnlyDateString(transactionInfo.transactionDate),
+                        style: Theme.of(context).textTheme.body1.apply(
+                            fontSizeFactor: 0.8, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                  (transactionInfo.transactionCategoryName == 'expense')
+                      ? Text(
+                          '-' +
+                              DoubleHelper.convertDobleTo2DecimalPlaces(
+                                  transactionInfo.transactionAmount),
+                          style: Theme.of(context)
+                              .textTheme
+                              .body1
+                              .apply(color: Colors.red.withAlpha(190)))
+                      : Text(
+                          DoubleHelper.convertDobleTo2DecimalPlaces(
+                              transactionInfo.transactionAmount),
+                        ),
                   IconButton(
                     icon: Icon(
                       Icons.delete,
@@ -196,24 +218,22 @@ class TransactionInfoDtoTile extends StatelessWidget {
                   )
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                    (transactionInfo.transactionNote == null)
-                        ? ""
-                        : transactionInfo.transactionNote,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: Theme.of(context)
-                        .textTheme
-                        .body2
-                        .apply(fontSizeFactor: 1.2),
-                  ),
-                ],
-              )
+              Padding(padding: const EdgeInsets.only(top: 10)),
+              if (transactionInfo.transactionNote != null &&
+                  transactionInfo.transactionNote != '')
+                Row(
+                  children: <Widget>[
+                    Text(
+                      transactionInfo.transactionNote,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: Theme.of(context)
+                          .textTheme
+                          .body2
+                          .apply(fontSizeFactor: 1.2, color: Colors.grey[700]),
+                    ),
+                  ],
+                ),
             ],
           )),
     );

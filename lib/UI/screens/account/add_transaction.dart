@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:expenses/UI/helper/date_formatter.dart';
 import 'package:expenses/dao/transaction_info_dao.dart';
 import 'package:expenses/models/transaction_info.dart';
 import 'package:expenses/models/transaction_type.dart';
@@ -46,11 +47,6 @@ class _AddTransactionState extends State<AddTransaction> {
       });
   }
 
-  String _getOnlyDateString(DateTime dateTime) {
-    var formatter = new DateFormat('EEEE, dd/MM/yyyy');
-    return formatter.format(dateTime);
-  }
-
   bool isNumeric(String s) {
     if (s == null) {
       return false;
@@ -80,7 +76,7 @@ class _AddTransactionState extends State<AddTransaction> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            _getOnlyDateString(selectedDate).toString(),
+                            getOnlyDateString(selectedDate).toString(),
                             textAlign: TextAlign.start,
                           ),
                           FlatButton(
