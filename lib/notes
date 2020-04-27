@@ -1,0 +1,47 @@
+*******************************Page layout template
+Container(
+        // color: Colors.blue,
+        decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+        child: FractionallySizedBox(
+          heightFactor: 1,
+          widthFactor: 1,
+          child: Center(
+            child: Text("account text"),
+          )
+        ),
+        // child: Center(
+        //   child: Text("account text"),
+
+        // ),
+      ),
+
+
+******************************* The size of the screen
+EdgeInsets.all(MediaQuery.of(context).size.width * 0.1) 
+
+
+*******************************show snackbar
+Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text('Yay! ' + text)));
+
+
+*******************************show dialog
+
+   return showDialog(
+       context: context,
+       builder: (context) {
+         return AddTransaction();
+       },
+     );
+     
+
+*******************************call a function (and setstate in it) after the widget build is completed
+ @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _savedAmount = _incomeValue - _expenseValue;
+      });
+    });
+  }

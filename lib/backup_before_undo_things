@@ -1,0 +1,370 @@
+//monthly_total_stats
+
+
+import 'package:expenses/models/monthly_total.dart';
+import 'package:expenses/repositories/monthly_totals_repository.dart';
+import 'package:flutter/material.dart';
+
+class MonthlyTotalStats extends StatefulWidget {
+  MonthlyTotalStats(this.size, {Key key}) : super(key: key);
+
+  final Size size;
+
+  @override
+  _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
+}
+
+class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
+  
+  bool _isIncomeSet = false;
+  bool _isExpenseSet = false;
+
+  double _savedAmount = 0;
+  double _incomeValue;
+  double _expenseValue;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     setState(() {
+  //       _savedAmount = _incomeValue - _expenseValue;
+  //     });
+  //   });
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    var _paddingWidth = widget.size.width * 0.03;
+    var _paddingHeight = widget.size.width * 0.02;
+
+    double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
+    double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
+
+    return Container(
+        child: Container(
+      color: Theme.of(context).backgroundColor,
+      padding: EdgeInsets.only(
+          left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
+      child: Card(
+        child: Container(
+          padding: widget.size.height <= 600
+              ? EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent)
+              : EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent),
+          alignment: Alignment.centerLeft,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
+              FutureBuilder<List<MonthlyTotalAmount>>(
+                  future: MonthlyTotalAmountsRepository()
+                      .getMonthlyIncomeTransactionTotal(
+                          DateTime.now().year, DateTime.now().month),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text('There has been an error');
+                    } else if (snapshot.hasData) {
+                      _incomeValue = (snapshot.data.length > 0)
+                          ? snapshot.data[0].amount
+                          : 'No income data for this month';
+                      _isIncomeSet= true;
+                      if(_isExpenseSet){
+                        _savedAmount = _incomeValue - _expenseValue;
+                      }
+                      return AccountBalanceInfoRow('Income:',
+                          _incomeValue.toStringAsFixed(2), Colors.green);
+                    } else {
+                      return Text('No income data for this month');
+                    }
+                  }),
+              Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
+              FutureBuilder<List<MonthlyTotalAmount>>(
+                  future: MonthlyTotalAmountsRepository()
+                      .getMonthlyExpenseTransactionTotal(
+                          DateTime.now().year, DateTime.now().month),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text('There has been an error');
+                    } else if (snapshot.hasData) {
+                      _expenseValue = (snapshot.data.length > 0)
+                          ? snapshot.data[0].amount
+                          : 'No expense data for this month';
+                      _isExpenseSet = true;
+                      if(_isIncomeSet){
+                        _savedAmount = _incomeValue - _expenseValue;
+                      }
+                      return AccountBalanceInfoRow('Expense:',
+                          _expenseValue.toStringAsFixed(2), Colors.red);
+                    } else {
+                      return Text('No expense data for this month');
+                    }
+                  }),
+              Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
+              AccountBalanceInfoRow(
+                  'Saved:', _savedAmount.toStringAsFixed(2), Colors.blue),
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
+}
+
+class AccountBalanceInfoRow extends StatelessWidget {
+  final String text1;
+  final String text2;
+  final Color color;
+
+  AccountBalanceInfoRow(this.text1, this.text2, this.color);
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  width: 16,
+                  height: 16,
+                ),
+                Padding(padding: EdgeInsets.only(left: 8)),
+                Text(text1, style: _textStyleSm),
+              ],
+            ),
+          ],
+        ),
+        Text(text2, style: _textStyleSm)
+      ],
+    );
+  }
+}
+
+
+
+//monthly_totals_repository
+
+import 'package:expenses/dao/monthly_total_amounts_dao.dart';
+import 'package:expenses/models/monthly_total.dart';
+import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
+    as p;
+
+class MonthlyTotalAmountsRepository {
+  Future<List<MonthlyTotalAmount>> getMonthlyExpenseTransactionTotal(
+      int year, int month) {
+    return MonthlyTotalAmountsDao().getMonthlyTotalAmounts(
+        year,
+        month,
+        p.transactionCategories
+            .where((c) => c.transactionCategoryName == 'expense')
+            .first
+            .transactionCategoryId);
+  }
+
+  Future<List<MonthlyTotalAmount>> getMonthlyIncomeTransactionTotal(
+      int year, int month) {
+    return MonthlyTotalAmountsDao().getMonthlyTotalAmounts(
+        year,
+        month,
+        p.transactionCategories
+            .where((c) => c.transactionCategoryName == 'income')
+            .first
+            .transactionCategoryId);
+  }
+}
+
+
+
+//********************************************* MONTHLY_TOTAL_STATS
+import 'package:expenses/models/monthly_total.dart';
+import 'package:expenses/repositories/monthly_totals_repository.dart';
+import 'package:flutter/material.dart';
+
+class MonthlyTotalStats extends StatefulWidget {
+  MonthlyTotalStats(this.size, {Key key}) : super(key: key);
+
+  final Size size;
+
+  @override
+  _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
+}
+
+class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
+  Future<int> getInt() {
+    return Future.delayed(Duration(seconds: 4), () {
+      return 10;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((s) {
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          saved = income - expense;
+        });
+      });
+    });
+  }
+
+  double saved = 0;
+  double income = 1000;
+  double expense = 800;
+
+  @override
+  Widget build(BuildContext context) {
+    var _paddingWidth = widget.size.width * 0.03;
+    var _paddingHeight = widget.size.width * 0.02;
+
+    double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
+    double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
+
+    return Container(
+        child: Container(
+      color: Theme.of(context).backgroundColor,
+      padding: EdgeInsets.only(
+          left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
+      child:
+          // Column(
+          //   children: <Widget>[
+          // FutureBuilder<int>(
+          //     future: getInt(),
+          //     builder: (c, snap) {
+          //       if (snap.hasData) {
+          //         return Text('data');
+          //       } else {
+          //         return Container(
+          //           child: Text('a'),
+          //         );
+          //       }
+          //     }),
+          // Text(saved.toString()),
+          Card(
+        child: Container(
+          padding: widget.size.height <= 600
+              ? EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent)
+              : EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent),
+          alignment: Alignment.centerLeft,
+          child: FutureBuilder<List<MonthlyTotalAmount>>(
+              future: Future.wait([
+                MonthlyTotalAmountsRepository()
+                    .getMonthlyIncomeTransactionTotal(
+                        DateTime.now().year, DateTime.now().month),
+                MonthlyTotalAmountsRepository()
+                    .getMonthlyExpenseTransactionTotal(
+                        DateTime.now().year, DateTime.now().month),
+              ]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    // when the application first starts (without the db created, it will throw this error)
+                    // when there is not either the income or the expense value, it will throw this error
+                    print(snapshot.error);
+                    return Center(child: Text('No data for this month'));
+                  }
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: Text(
+                            'There has been no income/expense data for this month'));
+                  } else {
+                    income = snapshot.data[0].amount;
+                    expense = snapshot.data[1].amount;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Income:',
+                            snapshot.data[0].amount.toStringAsFixed(2),
+                            Colors.green),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Expense:',
+                            snapshot.data[1].amount.toStringAsFixed(2),
+                            Colors.red),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Saved:', saved.toStringAsFixed(2), Colors.blue),
+                      ],
+                    );
+                  }
+                } else {
+                  return Center(child: LinearProgressIndicator());
+                }
+              }),
+        ),
+        // ),
+        // ],
+      ),
+    ));
+  }
+}
+
+class AccountBalanceInfoRow extends StatelessWidget {
+  final String text1;
+  final String text2;
+  final Color color;
+
+  AccountBalanceInfoRow(this.text1, this.text2, this.color);
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  width: 16,
+                  height: 16,
+                ),
+                Padding(padding: EdgeInsets.only(left: 8)),
+                Text(text1, style: _textStyleSm),
+              ],
+            ),
+          ],
+        ),
+        Text(text2, style: _textStyleSm)
+      ],
+    );
+  }
+}
+

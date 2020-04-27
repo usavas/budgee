@@ -1,0 +1,177 @@
+import 'package:expenses/models/monthly_total.dart';
+import 'package:expenses/repositories/monthly_totals_repository.dart';
+import 'package:flutter/material.dart';
+
+class MonthlyTotalStats extends StatefulWidget {
+  MonthlyTotalStats(this.size, {Key key}) : super(key: key);
+
+  final Size size;
+
+  @override
+  _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
+}
+
+class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
+  @override
+  Widget build(BuildContext context) {
+    var _paddingWidth = widget.size.width * 0.03;
+    var _paddingHeight = widget.size.width * 0.02;
+
+    double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
+    double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
+
+    return Container(
+        child: Container(
+      color: Theme.of(context).backgroundColor,
+      padding: EdgeInsets.only(
+          left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
+      child: Card(
+        child: Container(
+          padding: widget.size.height <= 600
+              ? EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent)
+              : EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent),
+          alignment: Alignment.centerLeft,
+          child: FutureBuilder<List<MonthlyTotalAmount>>(
+              future: Future.wait([
+                MonthlyTotalAmountsRepository()
+                    .getMonthlyIncomeTransactionTotal(
+                        DateTime.now().year, DateTime.now().month),
+                MonthlyTotalAmountsRepository()
+                    .getMonthlyExpenseTransactionTotal(
+                        DateTime.now().year, DateTime.now().month),
+              ]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    // return an empty list from respected dao and check if the list empty here, and if empty show this text
+                    print(snapshot.error);
+                    return Center(child: Text('Add transactions to see the monthly statistics'));
+                  }
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: Text(
+                            'There has been no income/expense data for this month'));
+                  } else {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Income:',
+                            snapshot.data[0].amount.toStringAsFixed(2),
+                            Colors.green),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Expense:',
+                            snapshot.data[1].amount.toStringAsFixed(2),
+                            Colors.red),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Saved:',
+                            (snapshot.data[0].amount - snapshot.data[1].amount)
+                                .toStringAsFixed(2),
+                            Colors.blue),
+                      ],
+                    );
+                  }
+                } else {
+                  return Placeholder(
+                    paddingBtwTexts: _paddingBtwTexts,
+                  );
+                }
+              }),
+        ),
+      ),
+    ));
+  }
+}
+
+class AccountBalanceInfoRow extends StatelessWidget {
+  final String text1;
+  final String text2;
+  final Color color;
+
+  AccountBalanceInfoRow(this.text1, this.text2, this.color);
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.all(Radius.circular(6)),
+                  ),
+                  width: 16,
+                  height: 16,
+                ),
+                Padding(padding: EdgeInsets.only(left: 8)),
+                Text(text1, style: _textStyleSm),
+              ],
+            ),
+          ],
+        ),
+        Text(text2, style: _textStyleSm)
+      ],
+    );
+  }
+}
+
+class Placeholder extends StatelessWidget {
+  Placeholder({Key key, this.paddingBtwTexts}) : super(key: key);
+
+  final double paddingBtwTexts;
+
+  final BoxDecoration _decoration =
+      BoxDecoration(borderRadius: BorderRadius.circular(10));
+  final double _alpha = 0.2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(padding: EdgeInsets.only(top: paddingBtwTexts)),
+          Expanded(
+            child: Container(
+              decoration: _decoration.copyWith(color: Colors.green.withOpacity(_alpha)),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: paddingBtwTexts)),
+          Expanded(
+            child: Container(
+              decoration: _decoration.copyWith(color: Colors.red.withOpacity(_alpha)),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: paddingBtwTexts)),
+          Expanded(
+            child: Container(
+              decoration: _decoration.copyWith(color: Colors.blue.withOpacity(_alpha)),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: paddingBtwTexts)),
+        ],
+      ),
+    );
+  }
+}
