@@ -1,8 +1,10 @@
-import 'package:expenses/UI/screens/account/monthly_total_stats_provider.dart';
+import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:expenses/models/monthly_total.dart';
 import 'package:expenses/repositories/monthly_totals_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'monthly_total_stats_detailed.dart';
 
 class MonthlyTotalStats extends StatefulWidget {
   MonthlyTotalStats(this.size, {Key key}) : super(key: key);
@@ -22,78 +24,85 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
     double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
     double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
 
-    return Container(
-        child: Container(
-      color: Theme.of(context).backgroundColor,
-      padding: EdgeInsets.only(
-          left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
-      child: Card(
-        child: Consumer<MonthlyTotalStatsProvider>(
-            builder: (context, provider, _) {
-          return Container(
-            padding: widget.size.height <= 600
-                ? EdgeInsets.only(
-                    left: _paddingAroundContent,
-                    right: _paddingAroundContent,
-                    top: _paddingAroundContent)
-                : EdgeInsets.only(
-                    left: _paddingAroundContent,
-                    right: _paddingAroundContent,
-                    top: _paddingAroundContent),
-            alignment: Alignment.centerLeft,
-            child: FutureBuilder<List<MonthlyTotalAmount>>(
-                future: provider.monthlyTotals,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      // return an empty list from respected dao and check if the list empty here, and if empty show this text
-                      print(snapshot.error);
-                      return Center(
-                          child: Text(
-                              'Add transactions to see the monthly statistics'));
-                    }
-                    if (!snapshot.hasData) {
-                      return Center(
-                          child: Text(
-                              'There has been no income/expense data for this month'));
-                    } else {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                              padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                          AccountBalanceInfoRow(
-                              'Income:',
-                              snapshot.data[0].amount.toStringAsFixed(2),
-                              Colors.green),
-                          Padding(
-                              padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                          AccountBalanceInfoRow(
-                              'Expense:',
-                              snapshot.data[1].amount.toStringAsFixed(2),
-                              Colors.red),
-                          Padding(
-                              padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                          AccountBalanceInfoRow(
-                              'Saved:',
-                              (snapshot.data[0].amount -
-                                      snapshot.data[1].amount)
-                                  .toStringAsFixed(2),
-                              Colors.blue),
-                        ],
-                      );
-                    }
-                  } else {
-                    return Placeholder(
-                      paddingBtwTexts: _paddingBtwTexts,
-                    );
+    CurrentMonthYearProvider monthYearProvider =
+        Provider.of<CurrentMonthYearProvider>(context);
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MonthlyTotalStatsDetailed(
+                    monthYearProvider.currentYear,
+                    monthYearProvider.currentMonth)));
+      },
+      child: Container(
+        color: Theme.of(context).backgroundColor,
+        padding: EdgeInsets.only(
+            left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
+        child: Card(
+            child: Container(
+          padding: widget.size.height <= 600
+              ? EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent)
+              : EdgeInsets.only(
+                  left: _paddingAroundContent,
+                  right: _paddingAroundContent,
+                  top: _paddingAroundContent),
+          alignment: Alignment.centerLeft,
+          child: FutureBuilder<List<MonthlyTotalAmount>>(
+              future: Future.wait([
+                MonthlyTotalAmountsRepository()
+                    .getMonthlyIncomeTransactionTotal(
+                        monthYearProvider.currentYear,
+                        monthYearProvider.currentMonth),
+                MonthlyTotalAmountsRepository()
+                    .getMonthlyExpenseTransactionTotal(
+                        monthYearProvider.currentYear,
+                        monthYearProvider.currentMonth),
+              ]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    // this returns an empty list from respected dao, check if the list empty, and only then show this text
+                    print(snapshot.error);
+                    return Center(
+                        child: Text(
+                            'Add transactions to see the monthly statistics'));
                   }
-                }),
-          );
-        }),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                      AccountBalanceInfoRow(
+                          'Income:',
+                          snapshot.data[0].amount.toStringAsFixed(2),
+                          Colors.green),
+                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                      AccountBalanceInfoRow(
+                          'Expense:',
+                          snapshot.data[1].amount.toStringAsFixed(2),
+                          Colors.red),
+                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                      AccountBalanceInfoRow(
+                          'Saved:',
+                          (snapshot.data[0].amount - snapshot.data[1].amount)
+                              .toStringAsFixed(2),
+                          Colors.blue),
+                    ],
+                  );
+                } else {
+                  return Placeholder(
+                    paddingBtwTexts: _paddingBtwTexts,
+                  );
+                }
+              }),
+        )),
       ),
-    ));
+    );
   }
 }
 

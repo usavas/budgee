@@ -1,13 +1,12 @@
-import 'package:expenses/UI/screens/account/monthly_total_stats_provider.dart';
+import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
     as p;
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'add_transaction.dart';
-import 'account_stats.dart';
 import 'monthly_total_stats.dart';
 
 class Account extends StatefulWidget {
@@ -16,12 +15,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String _getCurrMonthYear(DateTime dateTime) {
-    return '${DateFormat('MMMM').format(dateTime)}, ${dateTime.year} ';
-  }
-
-  DateTime _currDateTime = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
@@ -29,90 +22,49 @@ class _AccountState extends State<Account> {
     var _paddingHeight = _size.width * 0.02;
 
     return Scaffold(
-        body: ChangeNotifierProvider(
-      create: (_) => MonthlyTotalStatsProvider(),
-      child: Column(children: <Widget>[
-        Expanded(
-          flex: 3,
-          child: Container(
-              margin: EdgeInsets.only(
-                  left: _paddingWidth,
-                  right: _paddingWidth,
-                  top: _paddingHeight),
-              decoration: BoxDecoration(border: Border.all()),
-              child: Center(child: Text("Advertisement here"))),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            color: Theme.of(context).backgroundColor,
-            padding: EdgeInsets.only(
-                left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
-            child: Card(
-                child: Consumer<MonthlyTotalStatsProvider>(
-              builder: (context, provider, _) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        color: Theme.of(context).textTheme.body1.color,
-                        onPressed: () {
-                          provider.setMonthlyTotals(
-                              _currDateTime.year, _currDateTime.month - 1);
-                          setState(() {
-                            _currDateTime = DateTime(_currDateTime.year,
-                                _currDateTime.month - 1, _currDateTime.day);
-                          });
-                        },
-                      ),
-                      Text(_getCurrMonthYear(_currDateTime)),
-                      IconButton(
-                        icon: Icon(Icons.arrow_forward),
-                        color: Theme.of(context).textTheme.body1.color,
-                        onPressed: () {
-                          provider.setMonthlyTotals(
-                              _currDateTime.year, _currDateTime.month - 1);
-                          setState(() {
-                            _currDateTime = DateTime(_currDateTime.year,
-                                _currDateTime.month + 1, _currDateTime.day);
-                          });
-                        },
-                      ),
-                    ],
-                  )),
-            )),
+      body: ChangeNotifierProvider(
+        create: (_) => CurrentMonthYearProvider(),
+        child: Column(children: <Widget>[
+          Expanded(
+            flex: 3,
+            child: Container(
+                margin: EdgeInsets.only(
+                    left: _paddingWidth,
+                    right: _paddingWidth,
+                    top: _paddingHeight),
+                decoration: BoxDecoration(border: Border.all()),
+                child: Center(child: Text("Advertisement here"))),
           ),
-        ),
-        Expanded(
-          flex: 4,
-          child: GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AccountStats()));
-              },
-              child: MonthlyTotalStats(_size)),
-        ),
-        Expanded(
-          flex: 10,
-          child: Container(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-            // color: Theme.of(context).backgroundColor,
-            child: PageView(
-              controller: PageController(initialPage: 0),
-              children: <Widget>[
-                TransactionTypesPage(p.expenseTypes),
-                TransactionTypesPage(p.incomeTypes)
-              ],
+          Expanded(
+            flex: 2,
+            child: CurrentMonth(_paddingWidth, _paddingHeight),
+          ),
+          Expanded(
+            flex: 4,
+            child: MonthlyTotalStats(_size),
+          ),
+          Expanded(
+            flex: 10,
+            child: Container(
+              // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+              // color: Theme.of(context).backgroundColor,
+              child: PageView(
+                controller: PageController(initialPage: 0),
+                children: <Widget>[
+                  TransactionTypesPage(p.expenseTypes),
+                  TransactionTypesPage(p.incomeTypes)
+                ],
+              ),
             ),
-          ),
-        )
-      ]),
-    ));
+          )
+        ]),
+      ),
+    );
   }
 }
 
+// Transaction types such as rent, utilities grouped under income and expense
+//todo evaluate retrieving them from database
 class TransactionTypesPage extends StatelessWidget {
   final List<TransactionType> transactionTypes;
   TransactionTypesPage(this.transactionTypes);

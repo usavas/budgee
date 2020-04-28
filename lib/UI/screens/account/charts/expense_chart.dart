@@ -10,7 +10,7 @@ class ExpenseChart extends StatelessWidget {
   factory ExpenseChart.withSampleData() {
     return new ExpenseChart(
       _createExpenseData(),
-      animate: false,
+      animate: true,
     );
   }
 

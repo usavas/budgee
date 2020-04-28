@@ -5,8 +5,11 @@ import 'UI/themes/dark_theme_styles.dart';
 import 'UI/themes/darktheme_provider.dart';
 import 'UI/screens/bottomnavigation.dart';
 
-
-void main() => runApp(MyApp());
+void main() {
+  // in order to prevent the error occuring on calling multipler providers in the same context
+  Provider.debugCheckInvalidValueType = null;
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -39,7 +42,6 @@ class _MyAppState extends State<MyApp> {
             title: 'AylikGelirGider',
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            
             home: BottomNavigation(),
           );
         },
