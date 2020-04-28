@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
 
   void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme =
+    themeChangeProvider.isDarkTheme =
         await themeChangeProvider.darkThemePreference.getTheme();
   }
 
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: 'AylikGelirGider',
             debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            theme: Styles.themeData(themeChangeProvider.isDarkTheme, context),
             home: BottomNavigation(),
           );
         },

@@ -1,8 +1,4 @@
 import 'package:expenses/UI/helper/date_formatter.dart';
-import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
-import 'package:provider/provider.dart';
-
-import 'charts/expense_chart.dart';
 import 'charts/expense_chart_pie.dart';
 import 'package:flutter/material.dart';
 

@@ -4,7 +4,6 @@ import 'package:expenses/dao/transaction_info_dao.dart';
 import 'package:expenses/models/transaction_info.dart';
 import 'package:expenses/models/transaction_type.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction(this.transactionType, {Key key}) : super(key: key);

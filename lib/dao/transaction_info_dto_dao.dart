@@ -13,9 +13,10 @@ class TransactionInfoDtoDao {
       transaction_type_id,
       tc.transaction_cat_name,
       transaction_cat_id,
-      transaction_note, 
+      transaction_note,
       transaction_date, 
-      transaction_amount
+      transaction_amount,
+      transaction_type_icon
         FROM transaction_info t, transaction_type tt, transaction_cat tc
         WHERE t.transaction_type_id = tt.id AND tt.transaction_cat_id = tc.id
         AND transaction_date between ? and ?
@@ -37,7 +38,8 @@ class TransactionInfoDtoDao {
       transaction_cat_id,
       transaction_note, 
       transaction_date, 
-      transaction_amount
+      transaction_amount,
+      transaction_type_icon
         FROM transaction_info t, transaction_type tt, transaction_cat tc
         WHERE t.transaction_type_id = tt.id AND tt.transaction_cat_id = tc.id
       ''');

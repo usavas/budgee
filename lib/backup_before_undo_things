@@ -1,370 +1,218 @@
-//monthly_total_stats
+import 'package:expenses/UI/helper/date_formatter.dart';
+import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
+import 'package:provider/provider.dart';
 
-
-import 'package:expenses/models/monthly_total.dart';
-import 'package:expenses/repositories/monthly_totals_repository.dart';
+import '../../../models/transaction_info_dto.dart';
+import '../../../models/helpers/double_helper.dart';
+import 'package:expenses/models/transaction_info.dart';
+import 'package:expenses/repositories/transaction_repository.dart';
 import 'package:flutter/material.dart';
 
-class MonthlyTotalStats extends StatefulWidget {
-  MonthlyTotalStats(this.size, {Key key}) : super(key: key);
-
-  final Size size;
+class TransactionHistory extends StatefulWidget {
+  TransactionHistory({Key key}) : super(key: key);
 
   @override
-  _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
+  _TransactionHistoryState createState() => _TransactionHistoryState();
 }
 
-class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
-  
-  bool _isIncomeSet = false;
-  bool _isExpenseSet = false;
+class _TransactionHistoryState extends State<TransactionHistory> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Theme.of(context).backgroundColor,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+                flex: 1,
+                child: Container(
+                  margin:
+                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: Center(
+                    child: Text("Advertisement here"),
+                  ),
+                )),
+            ChangeNotifierProvider(
+                create: (context) => TransactionHistoryProvider(),
+                child: Expanded(flex: 5, child: TransactionInfoDtoList()))
+          ],
+        ));
+  }
+}
 
-  double _savedAmount = 0;
-  double _incomeValue;
-  double _expenseValue;
+class TransactionInfoDtoList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<TransactionHistoryProvider>(context);
+    return FutureBuilder(
+      future: provider.transactionInfos,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<TransactionInfoDto> _transactions = snapshot.data;
+          if (_transactions.length > 0) {
+            return Scaffold(
+              body: ListView.builder(
+                itemCount: _transactions.length,
+                itemBuilder: (context, index) {
+                  return TransactionInfoDtoTile(_transactions[index]);
+                },
+              ),
+            );
+          } else {
+            return Scaffold(
+              body: Center(
+                child: Text('No transaction for this time period'),
+              ),
+            );
+          }
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Text(
+                  'In TransactionInfoDtoList: ' + snapshot.error.toString()),
+            ),
+          );
+        } else {
+          return Scaffold(
+            body: Center(
+              child: Text('Could not fetch the data'),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     setState(() {
-  //       _savedAmount = _incomeValue - _expenseValue;
-  //     });
-  //   });
-  // }
+class TransactionInfoDtoTile extends StatelessWidget {
+  final TransactionInfoDto transactionInfo;
+  TransactionInfoDtoTile(this.transactionInfo);
 
   @override
   Widget build(BuildContext context) {
-    var _paddingWidth = widget.size.width * 0.03;
-    var _paddingHeight = widget.size.width * 0.02;
-
-    double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
-    double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
-
-    return Container(
-        child: Container(
-      color: Theme.of(context).backgroundColor,
-      padding: EdgeInsets.only(
-          left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
-      child: Card(
-        child: Container(
-          padding: widget.size.height <= 600
-              ? EdgeInsets.only(
-                  left: _paddingAroundContent,
-                  right: _paddingAroundContent,
-                  top: _paddingAroundContent)
-              : EdgeInsets.only(
-                  left: _paddingAroundContent,
-                  right: _paddingAroundContent,
-                  top: _paddingAroundContent),
-          alignment: Alignment.centerLeft,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+    var provider =
+        Provider.of<TransactionHistoryProvider>(context, listen: false);
+    return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 4,
+        //todo color: [add here the transaction type color? maybe]
+        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-              FutureBuilder<List<MonthlyTotalAmount>>(
-                  future: MonthlyTotalAmountsRepository()
-                      .getMonthlyIncomeTransactionTotal(
-                          DateTime.now().year, DateTime.now().month),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      print(snapshot.error);
-                      return Text('There has been an error');
-                    } else if (snapshot.hasData) {
-                      _incomeValue = (snapshot.data.length > 0)
-                          ? snapshot.data[0].amount
-                          : 'No income data for this month';
-                      _isIncomeSet= true;
-                      if(_isExpenseSet){
-                        _savedAmount = _incomeValue - _expenseValue;
-                      }
-                      return AccountBalanceInfoRow('Income:',
-                          _incomeValue.toStringAsFixed(2), Colors.green);
-                    } else {
-                      return Text('No income data for this month');
-                    }
-                  }),
-              Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-              FutureBuilder<List<MonthlyTotalAmount>>(
-                  future: MonthlyTotalAmountsRepository()
-                      .getMonthlyExpenseTransactionTotal(
-                          DateTime.now().year, DateTime.now().month),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      print(snapshot.error);
-                      return Text('There has been an error');
-                    } else if (snapshot.hasData) {
-                      _expenseValue = (snapshot.data.length > 0)
-                          ? snapshot.data[0].amount
-                          : 'No expense data for this month';
-                      _isExpenseSet = true;
-                      if(_isIncomeSet){
-                        _savedAmount = _incomeValue - _expenseValue;
-                      }
-                      return AccountBalanceInfoRow('Expense:',
-                          _expenseValue.toStringAsFixed(2), Colors.red);
-                    } else {
-                      return Text('No expense data for this month');
-                    }
-                  }),
-              Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-              AccountBalanceInfoRow(
-                  'Saved:', _savedAmount.toStringAsFixed(2), Colors.blue),
+              Column(
+                children: <Widget>[
+                  Icon(Icons.description),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.all(12),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.black)),
+                        width: double.infinity,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(transactionInfo.transactionType),
+                            Text(
+                              getOnlyDateString(
+                                  transactionInfo.transactionDate),
+                              style: Theme.of(context).textTheme.body1.apply(
+                                  fontSizeFactor: 0.8, color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            (transactionInfo.transactionCategoryName ==
+                                    'expense')
+                                ? Text(
+                                    '-' +
+                                        DoubleHelper
+                                            .convertDobleTo2DecimalPlaces(
+                                                transactionInfo
+                                                    .transactionAmount),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .body1
+                                        .apply(
+                                            color: Colors.red.withAlpha(190)))
+                                : Text(
+                                    DoubleHelper.convertDobleTo2DecimalPlaces(
+                                        transactionInfo.transactionAmount),
+                                  ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.grey[300],
+                              ),
+                              onPressed: () {
+                                TransactionRepository()
+                                    .deleteTransaction(
+                                        transactionInfo.transactionId)
+                                    .then((deletedId) {
+                                  provider.updateTransactionInfoDtos();
+
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Text('Transaction info deleted'),
+                                        FlatButton(
+                                            child: Text('UNDO'),
+                                            onPressed: () {
+                                              //todo undo delete (add the same entity again in the db)
+                                              TransactionRepository()
+                                                  .insertTransaction(
+                                                      TransactionInfo
+                                                          .fromTransactionInfoDto(
+                                                              transactionInfo));
+                                              provider
+                                                  .updateTransactionInfoDtos();
+                                            })
+                                      ],
+                                    ),
+                                  ));
+                                });
+                              },
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  if (transactionInfo.transactionNote != null &&
+                      transactionInfo.transactionNote != '')
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          transactionInfo.transactionNote,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.body2.apply(
+                              fontSizeFactor: 1.2, color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ],
           ),
-        ),
-      ),
-    ));
+          // Padding(padding: const EdgeInsets.only(top: 10)),
+        ));
   }
 }
-
-class AccountBalanceInfoRow extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final Color color;
-
-  AccountBalanceInfoRow(this.text1, this.text2, this.color);
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: color,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                  ),
-                  width: 16,
-                  height: 16,
-                ),
-                Padding(padding: EdgeInsets.only(left: 8)),
-                Text(text1, style: _textStyleSm),
-              ],
-            ),
-          ],
-        ),
-        Text(text2, style: _textStyleSm)
-      ],
-    );
-  }
-}
-
-
-
-//monthly_totals_repository
-
-import 'package:expenses/dao/monthly_total_amounts_dao.dart';
-import 'package:expenses/models/monthly_total.dart';
-import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
-    as p;
-
-class MonthlyTotalAmountsRepository {
-  Future<List<MonthlyTotalAmount>> getMonthlyExpenseTransactionTotal(
-      int year, int month) {
-    return MonthlyTotalAmountsDao().getMonthlyTotalAmounts(
-        year,
-        month,
-        p.transactionCategories
-            .where((c) => c.transactionCategoryName == 'expense')
-            .first
-            .transactionCategoryId);
-  }
-
-  Future<List<MonthlyTotalAmount>> getMonthlyIncomeTransactionTotal(
-      int year, int month) {
-    return MonthlyTotalAmountsDao().getMonthlyTotalAmounts(
-        year,
-        month,
-        p.transactionCategories
-            .where((c) => c.transactionCategoryName == 'income')
-            .first
-            .transactionCategoryId);
-  }
-}
-
-
-
-//********************************************* MONTHLY_TOTAL_STATS
-import 'package:expenses/models/monthly_total.dart';
-import 'package:expenses/repositories/monthly_totals_repository.dart';
-import 'package:flutter/material.dart';
-
-class MonthlyTotalStats extends StatefulWidget {
-  MonthlyTotalStats(this.size, {Key key}) : super(key: key);
-
-  final Size size;
-
-  @override
-  _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
-}
-
-class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
-  Future<int> getInt() {
-    return Future.delayed(Duration(seconds: 4), () {
-      return 10;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((s) {
-      Future.delayed(Duration(seconds: 3), () {
-        setState(() {
-          saved = income - expense;
-        });
-      });
-    });
-  }
-
-  double saved = 0;
-  double income = 1000;
-  double expense = 800;
-
-  @override
-  Widget build(BuildContext context) {
-    var _paddingWidth = widget.size.width * 0.03;
-    var _paddingHeight = widget.size.width * 0.02;
-
-    double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
-    double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
-
-    return Container(
-        child: Container(
-      color: Theme.of(context).backgroundColor,
-      padding: EdgeInsets.only(
-          left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
-      child:
-          // Column(
-          //   children: <Widget>[
-          // FutureBuilder<int>(
-          //     future: getInt(),
-          //     builder: (c, snap) {
-          //       if (snap.hasData) {
-          //         return Text('data');
-          //       } else {
-          //         return Container(
-          //           child: Text('a'),
-          //         );
-          //       }
-          //     }),
-          // Text(saved.toString()),
-          Card(
-        child: Container(
-          padding: widget.size.height <= 600
-              ? EdgeInsets.only(
-                  left: _paddingAroundContent,
-                  right: _paddingAroundContent,
-                  top: _paddingAroundContent)
-              : EdgeInsets.only(
-                  left: _paddingAroundContent,
-                  right: _paddingAroundContent,
-                  top: _paddingAroundContent),
-          alignment: Alignment.centerLeft,
-          child: FutureBuilder<List<MonthlyTotalAmount>>(
-              future: Future.wait([
-                MonthlyTotalAmountsRepository()
-                    .getMonthlyIncomeTransactionTotal(
-                        DateTime.now().year, DateTime.now().month),
-                MonthlyTotalAmountsRepository()
-                    .getMonthlyExpenseTransactionTotal(
-                        DateTime.now().year, DateTime.now().month),
-              ]),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    // when the application first starts (without the db created, it will throw this error)
-                    // when there is not either the income or the expense value, it will throw this error
-                    print(snapshot.error);
-                    return Center(child: Text('No data for this month'));
-                  }
-                  if (!snapshot.hasData) {
-                    return Center(
-                        child: Text(
-                            'There has been no income/expense data for this month'));
-                  } else {
-                    income = snapshot.data[0].amount;
-                    expense = snapshot.data[1].amount;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                        AccountBalanceInfoRow(
-                            'Income:',
-                            snapshot.data[0].amount.toStringAsFixed(2),
-                            Colors.green),
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                        AccountBalanceInfoRow(
-                            'Expense:',
-                            snapshot.data[1].amount.toStringAsFixed(2),
-                            Colors.red),
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                        AccountBalanceInfoRow(
-                            'Saved:', saved.toStringAsFixed(2), Colors.blue),
-                      ],
-                    );
-                  }
-                } else {
-                  return Center(child: LinearProgressIndicator());
-                }
-              }),
-        ),
-        // ),
-        // ],
-      ),
-    ));
-  }
-}
-
-class AccountBalanceInfoRow extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final Color color;
-
-  AccountBalanceInfoRow(this.text1, this.text2, this.color);
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: color,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                  ),
-                  width: 16,
-                  height: 16,
-                ),
-                Padding(padding: EdgeInsets.only(left: 8)),
-                Text(text1, style: _textStyleSm),
-              ],
-            ),
-          ],
-        ),
-        Text(text2, style: _textStyleSm)
-      ],
-    );
-  }
-}
-
