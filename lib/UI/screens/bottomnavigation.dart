@@ -1,7 +1,7 @@
 import 'settings/settings.dart';
 import 'transactionhistory/transaction_history.dart';
 import 'package:flutter/material.dart';
-import 'account/account_balance.dart';
+import 'account/account_home.dart';
 
 class BottomNavigation extends StatefulWidget {
   BottomNavigation({Key key}) : super(key: key);
