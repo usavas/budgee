@@ -1,6 +1,9 @@
 import 'package:expenses/UI/helper/date_formatter.dart';
+import 'package:provider/provider.dart';
 import 'charts/expense_chart_pie.dart';
 import 'package:flutter/material.dart';
+
+import 'providers/current_month_year_provider.dart';
 
 class MonthlyTotalStatsDetailed extends StatelessWidget {
   const MonthlyTotalStatsDetailed(this.year, this.month, {Key key}) : super(key: key);
@@ -25,6 +28,8 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
       Colors.blue,
       Colors.yellow,
     ];
+
+    // CurrentMonthYearProvider provider = Provider.of<CurrentMonthYearProvider>(context);
 
     return SafeArea(
       child: Scaffold(

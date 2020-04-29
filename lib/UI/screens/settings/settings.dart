@@ -18,9 +18,9 @@ class _SettingsState extends State<Settings> {
     return Container(
       child: Center(
           child: Checkbox(
-        value: themeChange.darkTheme,
+        value: themeChange.isDarkTheme,
         onChanged: (bool value) {
-          themeChange.darkTheme = value;
+          themeChange.isDarkTheme = value;
         },
       )),
     );

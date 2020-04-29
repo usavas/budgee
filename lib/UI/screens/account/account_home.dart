@@ -1,11 +1,9 @@
 import 'package:expenses/UI/screens/account/current_month.dart';
-import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
     as p;
-import 'package:provider/provider.dart';
 import 'add_transaction.dart';
 import 'monthly_total_stats.dart';
 
@@ -22,9 +20,7 @@ class _AccountState extends State<Account> {
     var _paddingHeight = _size.width * 0.02;
 
     return Scaffold(
-      body: ChangeNotifierProvider(
-        create: (_) => CurrentMonthYearProvider(),
-        child: Column(children: <Widget>[
+      body: Column(children: <Widget>[
           Expanded(
             flex: 3,
             child: Container(
@@ -58,7 +54,6 @@ class _AccountState extends State<Account> {
             ),
           )
         ]),
-      ),
     );
   }
 }

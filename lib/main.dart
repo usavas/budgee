@@ -1,3 +1,4 @@
+import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,18 +34,19 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) {
-        return themeChangeProvider;
-      },
-      child: Consumer<DarkThemeProvider>(
-        builder: (BuildContext context, value, Widget child) {
-          return MaterialApp(
-            title: 'AylikGelirGider',
-            debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(themeChangeProvider.isDarkTheme, context),
-            home: BottomNavigation(),
-          );
-        },
+      create: (_) => CurrentMonthYearProvider(),
+      child: ChangeNotifierProvider.value(
+        value: themeChangeProvider,
+        child: Consumer<DarkThemeProvider>(
+          builder: (BuildContext context, value, Widget child) {
+            return MaterialApp(
+              title: 'AylikGelirGider',
+              debugShowCheckedModeBanner: false,
+              theme: Styles.themeData(themeChangeProvider.isDarkTheme, context),
+              home: BottomNavigation(),
+            );
+          },
+        ),
       ),
     );
   }

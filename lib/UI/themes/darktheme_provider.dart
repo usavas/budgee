@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class DarkThemeProvider with ChangeNotifier {
   DarkThemePreference darkThemePreference = DarkThemePreference();
-  bool _darkTheme = false;
+  bool _isDarkTheme = false;
 
-  bool get darkTheme => _darkTheme;
+  bool get isDarkTheme => _isDarkTheme;
 
-  set darkTheme(bool value) {
-    _darkTheme = value;
+  set isDarkTheme(bool value) {
+    _isDarkTheme = value;
     darkThemePreference.setDarkTheme(value);
     notifyListeners();
   }
