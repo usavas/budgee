@@ -4,7 +4,7 @@ import 'package:expenses/repositories/monthly_totals_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'monthly_total_stats_detailed.dart';
+import 'monthly_transaction_type_totals.dart';
 
 class MonthlyTotalStats extends StatefulWidget {
   MonthlyTotalStats(this.size, {Key key}) : super(key: key);
@@ -32,9 +32,7 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MonthlyTotalStatsDetailed(
-                    monthYearProvider.currentYear,
-                    monthYearProvider.currentMonth)));
+                builder: (context) => MonthlyTotalStatsDetailed()));
       },
       child: Container(
         color: Theme.of(context).backgroundColor,

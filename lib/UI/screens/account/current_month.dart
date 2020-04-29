@@ -7,8 +7,8 @@ class CurrentMonth extends StatelessWidget {
   const CurrentMonth(this.paddingWidth, this.paddingHeight, {Key key})
       : super(key: key);
 
-  final paddingWidth;
-  final paddingHeight;
+  final double paddingWidth;
+  final double paddingHeight;
 
   @override
   Widget build(BuildContext context) {

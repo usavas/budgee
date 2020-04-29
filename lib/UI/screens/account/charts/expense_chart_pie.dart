@@ -17,40 +17,21 @@ class ExpenseChartPie extends StatelessWidget {
           animationDuration: Duration(milliseconds: 400),
           chartLegendSpacing: 32.0,
           chartRadius: MediaQuery.of(context).size.width / 2.4,
-          showChartValuesInPercentage: false,
+          showChartValuesInPercentage: true,
           showChartValues: true,
-          showChartValuesOutside: false,
+          showChartValuesOutside: true,
           chartValueBackgroundColor: Colors.grey[200],
           colorList: colorList,
           showLegends: true,
           legendPosition: LegendPosition.bottom,
-          decimalPlaces: 1,
+          decimalPlaces: 2,
           showChartValueLabel: true,
           initialAngle: 0,
           chartValueStyle: defaultChartValueStyle.copyWith(
             color: Colors.blueGrey[900].withOpacity(0.9),
           ),
-          chartType: ChartType.ring,
+          chartType: ChartType.disc,
         )),
     );
   }
 }
-
-
-
-  // Map<String, double> dataMap = Map();
-  // List<Color> colorList = [
-  //   Colors.red,
-  //   Colors.green,
-  //   Colors.blue,
-  //   Colors.yellow,
-  // ];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   dataMap.putIfAbsent("Yemek", () => 400);
-  //   dataMap.putIfAbsent("Kira", () => 1200);
-  //   dataMap.putIfAbsent("Benzin", () => 600);
-  //   dataMap.putIfAbsent("Hediye", () => 150);
-  // }
