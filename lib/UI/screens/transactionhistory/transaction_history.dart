@@ -45,7 +45,7 @@ class TransactionInfoDtoList extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = Provider.of<TransactionHistoryProvider>(context);
     return FutureBuilder(
-      future: provider.transactionInfos,
+      future: provider.getTransactionInfoDtos(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<TransactionInfoDto> _transactions = snapshot.data;
