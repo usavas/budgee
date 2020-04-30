@@ -10,6 +10,7 @@ class TransactionInfoDto {
   DateTime transactionDate;
   double transactionAmount;
   String transactionTypeIcon;
+  int transactionTypeColor;
 
   TransactionInfoDto(
       {this.transactionId,
@@ -20,7 +21,8 @@ class TransactionInfoDto {
       this.transactionNote,
       this.transactionDate,
       this.transactionAmount,
-      this.transactionTypeIcon});
+      this.transactionTypeIcon,
+      this.transactionTypeColor});
 
   factory TransactionInfoDto.fromDbMap(Map<String, dynamic> json) {
     TransactionInfoDto _transactionInfoDto = TransactionInfoDto(
@@ -31,7 +33,8 @@ class TransactionInfoDto {
       transactionCategoryId: json['transaction_cat_id'] as int,
       transactionNote: json['transaction_note'],
       transactionAmount: json['transaction_amount'] as double,
-      transactionTypeIcon: json['transaction_type_icon']
+      transactionTypeIcon: json['transaction_type_icon'],
+      transactionTypeColor: int.parse(json['transaction_type_color'])
     );
     var _transactionDate =
         DateTimeConverter.fromDoubleToDateTime(json['transaction_date']);

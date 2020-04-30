@@ -19,6 +19,7 @@ class MonthlyTransactionTypesTotalsDao {
         c.transaction_cat_name,
         i.transaction_type_id,
         t.transaction_type_name,
+		    t.transaction_type_color,
         SUM(transaction_amount) AS total_amount
       FROM transaction_info i, transaction_type t, transaction_cat c
       WHERE i.transaction_type_id = t.id 

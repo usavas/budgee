@@ -64,12 +64,8 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
                                       child: ExpenseChartPie(
                                         _getDataMapFromTransactionTypeTotals(
                                             snapshot.data),
-                                        // todo retrieve the colors of each items
                                         [
-                                          Colors.red,
-                                          Colors.green,
-                                          Colors.blue,
-                                          Colors.yellow,
+                                          ...snapshot.data.map((t) => Color(t.transactionTypeColor))
                                         ],
                                       )
                                       // ExpenseChart.withSampleData(),

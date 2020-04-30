@@ -93,9 +93,9 @@ class TransactionInfoDtoTile extends StatelessWidget {
     var provider =
         Provider.of<TransactionHistoryProvider>(context, listen: false);
     return Card(
+      // color: Color(transactionInfo.transactionTypeColor),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 4,
-      //todo color: [add here the transaction type color? maybe]
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Padding(
           padding: const EdgeInsets.all(16),
@@ -148,7 +148,6 @@ class TransactionInfoDtoTile extends StatelessWidget {
                               FlatButton(
                                   child: Text('UNDO'),
                                   onPressed: () {
-                                    //todo undo delete (add the same entity again in the db)
                                     TransactionRepository().insertTransaction(
                                         TransactionInfo.fromTransactionInfoDto(
                                             transactionInfo));

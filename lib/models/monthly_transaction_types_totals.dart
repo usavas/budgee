@@ -6,6 +6,7 @@ class MonthlyTransactionTypesTotal {
   String transactionCategoryName;
   int transactionTypeId;
   String transactionTypeName;
+  int transactionTypeColor;
   double totalAmount;
 
   MonthlyTransactionTypesTotal({
@@ -15,6 +16,7 @@ class MonthlyTransactionTypesTotal {
     this.transactionCategoryName,
     this.transactionTypeId,
     this.transactionTypeName,
+    this.transactionTypeColor,
     this.totalAmount
   });
 
@@ -26,6 +28,7 @@ class MonthlyTransactionTypesTotal {
       transactionCategoryName: json['transaction_cat_name'],
       transactionTypeId: json['transaction_type_id'] as int,
       transactionTypeName: json['transaction_type_name'],
+      transactionTypeColor: int.parse(json['transaction_type_color']),
       totalAmount: json['total_amount'] as double
     );
   }
