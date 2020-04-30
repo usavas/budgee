@@ -21,39 +21,39 @@ class _AccountState extends State<Account> {
 
     return Scaffold(
       body: Column(children: <Widget>[
-          Expanded(
-            flex: 3,
-            child: Container(
-                margin: EdgeInsets.only(
-                    left: _paddingWidth,
-                    right: _paddingWidth,
-                    top: _paddingHeight),
-                decoration: BoxDecoration(border: Border.all()),
-                child: Center(child: Text("Advertisement here"))),
-          ),
-          Expanded(
-            flex: 2,
-            child: CurrentMonth(_paddingWidth, _paddingHeight),
-          ),
-          Expanded(
-            flex: 4,
-            child: MonthlyTotalStats(_size),
-          ),
-          Expanded(
-            flex: 10,
-            child: Container(
-              // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-              // color: Theme.of(context).backgroundColor,
-              child: PageView(
-                controller: PageController(initialPage: 0),
-                children: <Widget>[
-                  TransactionTypesPage(p.expenseTypes),
-                  TransactionTypesPage(p.incomeTypes)
-                ],
-              ),
+        Expanded(
+          flex: 3,
+          child: Container(
+              margin: EdgeInsets.only(
+                  left: _paddingWidth,
+                  right: _paddingWidth,
+                  top: _paddingHeight),
+              decoration: BoxDecoration(border: Border.all()),
+              child: Center(child: Text("Advertisement here"))),
+        ),
+        Expanded(
+          flex: 2,
+          child: CurrentMonth(_paddingWidth, _paddingHeight),
+        ),
+        Expanded(
+          flex: 4,
+          child: MonthlyTotalStats(_size),
+        ),
+        Expanded(
+          flex: 10,
+          child: Container(
+            // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+            // color: Theme.of(context).backgroundColor,
+            child: PageView(
+              controller: PageController(initialPage: 0),
+              children: <Widget>[
+                TransactionTypesPage(p.expenseTypes),
+                TransactionTypesPage(p.incomeTypes)
+              ],
             ),
-          )
-        ]),
+          ),
+        )
+      ]),
     );
   }
 }
@@ -161,7 +161,8 @@ class TransactionTypeWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(_paddingTopIcon),
                     child: Icon(
-                      transactionType.icon,
+                      IconData(transactionType.transactionTypeIcon,
+                          fontFamily: 'MaterialIcons'),
                       size: _iconSize,
                       color: _color,
                     ),

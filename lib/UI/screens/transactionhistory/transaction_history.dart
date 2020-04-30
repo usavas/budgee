@@ -108,7 +108,17 @@ class TransactionInfoDtoTile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(transactionInfo.transactionType),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Icon(
+                            IconData(transactionInfo.transactionTypeIcon,
+                                fontFamily: 'MaterialIcons'),
+                            color: Color(transactionInfo.transactionTypeColor),
+                          ),
+                          Text(transactionInfo.transactionType),
+                        ],
+                      ),
                       Text(
                         getOnlyDateString(transactionInfo.transactionDate),
                         style: Theme.of(context).textTheme.body1.apply(

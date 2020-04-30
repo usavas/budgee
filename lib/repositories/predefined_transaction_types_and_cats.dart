@@ -20,16 +20,14 @@ final List<TransactionType> expenseTypes = <TransactionType>[
       transactionTypeDescription: 'House rent, Workplace rent etc.',
       transactionTypeColor:
           Colors.brown[_colorTone].value,
-      transactionTypeIcon: Icons.home.toString(),
-      icon: Icons.home),
+      transactionTypeIcon: Icons.home.codePoint),
   TransactionType(
     transactionCategoryId: 2,
     transactionTypeId: 2,
     transactionTypeName: 'Utilities',
     transactionTypeDescription: 'Electricity, gas, water etc.',
     transactionTypeColor: Colors.pink[_colorTone].value,
-    transactionTypeIcon: Icons.lightbulb_outline.toString(),
-    icon: Icons.lightbulb_outline,
+    transactionTypeIcon: Icons.lightbulb_outline.codePoint,
   ),
   TransactionType(
       transactionCategoryId: 2,
@@ -38,8 +36,8 @@ final List<TransactionType> expenseTypes = <TransactionType>[
       transactionTypeDescription: 'Gasoline, bus ticket etc.',
       transactionTypeColor:
           Colors.purple[_colorTone].value,
-      transactionTypeIcon: Icons.directions_bus.toString(),
-      icon: Icons.directions_bus),
+      transactionTypeIcon: Icons.directions_bus.codePoint,
+      ),
   TransactionType(
       transactionCategoryId: 2,
       transactionTypeId: 4,
@@ -47,8 +45,8 @@ final List<TransactionType> expenseTypes = <TransactionType>[
       transactionTypeDescription: 'Restaurant, cafe, eating out',
       transactionTypeColor:
           Colors.yellow[_colorTone].value,
-      transactionTypeIcon: Icons.restaurant.toString(),
-      icon: Icons.restaurant),
+      transactionTypeIcon: Icons.restaurant.codePoint,
+      ),
   TransactionType(
       transactionCategoryId: 2,
       transactionTypeId: 5,
@@ -56,8 +54,8 @@ final List<TransactionType> expenseTypes = <TransactionType>[
       transactionTypeDescription: 'Groceries',
       transactionTypeColor:
           Colors.green[_colorTone].value,
-      transactionTypeIcon: Icons.shopping_cart.toString(),
-      icon: Icons.shopping_cart),
+      transactionTypeIcon: Icons.shopping_cart.codePoint,
+      ),
   TransactionType(
       transactionCategoryId: 2,
       transactionTypeId: 6,
@@ -65,16 +63,16 @@ final List<TransactionType> expenseTypes = <TransactionType>[
       transactionTypeDescription: 'Cloting, shoes etc.',
       transactionTypeColor:
           Colors.blue[_colorTone].value,
-      transactionTypeIcon: Icons.shopping_basket.toString(),
-      icon: Icons.shopping_basket),
+      transactionTypeIcon: Icons.shopping_basket.codePoint,
+      ),
   TransactionType(
       transactionCategoryId: 2,
       transactionTypeId: 7,
       transactionTypeName: 'Health',
       transactionTypeDescription: 'Hospital, pharmacy, self-care products',
       transactionTypeColor: Colors.red[_colorTone].value,
-      transactionTypeIcon: Icons.local_hospital.toString(),
-      icon: Icons.local_hospital),
+      transactionTypeIcon: Icons.local_hospital.codePoint
+      ),
   TransactionType(
     transactionCategoryId: 2,
     transactionTypeId: 8,
@@ -82,8 +80,7 @@ final List<TransactionType> expenseTypes = <TransactionType>[
     transactionTypeDescription: 'College fees, courses, books etc.',
     transactionTypeColor:
         Colors.indigo[_colorTone].value,
-    transactionTypeIcon: Icons.school.toString(),
-    icon: Icons.school,
+    transactionTypeIcon: Icons.school.codePoint,
   ),
   TransactionType(
       transactionCategoryId: 2,
@@ -92,8 +89,7 @@ final List<TransactionType> expenseTypes = <TransactionType>[
       transactionTypeDescription: 'Hobbies, travel, party etc.',
       transactionTypeColor:
           Colors.orange[_colorTone].value,
-      transactionTypeIcon: Icons.audiotrack.toString(),
-      icon: Icons.audiotrack),
+      transactionTypeIcon: Icons.audiotrack.codePoint),
 ];
 
 final List<TransactionType> incomeTypes = <TransactionType>[
@@ -103,8 +99,7 @@ final List<TransactionType> incomeTypes = <TransactionType>[
     transactionTypeName: "Salary",
     transactionTypeDescription: "Monthly stable income",
     transactionTypeColor: Colors.green[_colorTone].value,
-    transactionTypeIcon: Icons.attach_money.toString(),
-    icon: Icons.attach_money,
+    transactionTypeIcon: Icons.attach_money.codePoint,
   ),
   TransactionType(
     transactionCategoryId: 1,
@@ -112,8 +107,7 @@ final List<TransactionType> incomeTypes = <TransactionType>[
     transactionTypeName: "Daily wage",
     transactionTypeDescription: "Daily wage, trade profit, one-time jobs etc.",
     transactionTypeColor: Colors.teal[_colorTone].value,
-    transactionTypeIcon: Icons.attach_money.toString(),
-    icon: Icons.attach_money,
+    transactionTypeIcon: Icons.attach_money.codePoint,
   ),
   TransactionType(
     transactionCategoryId: 1,
@@ -121,7 +115,6 @@ final List<TransactionType> incomeTypes = <TransactionType>[
     transactionTypeName: "Other",
     transactionTypeDescription: "All other types of income",
     transactionTypeColor: Colors.blue[_colorTone].value,
-    transactionTypeIcon: Icons.attach_money.toString(),
-    icon: Icons.attach_money,
+    transactionTypeIcon: Icons.attach_money.codePoint,
   )
 ];

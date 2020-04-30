@@ -8,7 +8,7 @@ import 'database_naming_helper.dart';
 
 class DatabaseHelper {
   static final _dbName = 'expenses.db';
-  static final _dbVersion = 110;
+  static final _dbVersion = 111;
 
   // Make this a singleton class.
   DatabaseHelper._privateConstructor();

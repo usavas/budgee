@@ -1,13 +1,10 @@
-import 'package:flutter/material.dart';
-
 class TransactionType {
   int transactionTypeId;
   int transactionCategoryId;
   String transactionTypeName;
   int transactionTypeColor;
-  String transactionTypeIcon;
+  int transactionTypeIcon;
   String transactionTypeDescription;
-  IconData icon;
   bool isActive = true;
 
   TransactionType(
@@ -17,7 +14,6 @@ class TransactionType {
       this.transactionTypeColor,
       this.transactionTypeIcon,
       this.transactionTypeDescription,
-      this.icon,
       this.isActive = true});
 
   TransactionType.fromJSON(Map<String, dynamic> jsonMap)
@@ -45,7 +41,7 @@ class TransactionType {
       transactionCategoryId: json['transaction_cat_id'],
       transactionTypeName: json['transaction_type_name'],
       transactionTypeColor: json['transaction_type_color'],
-      transactionTypeIcon: json['transaction_type_icon'],
+      transactionTypeIcon: int.parse(json['transaction_type_icon']),
       transactionTypeDescription: json['transaction_type_description'],
       isActive: (json['is_active'] == 1) ? true : false,
     );

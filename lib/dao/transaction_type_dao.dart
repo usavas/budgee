@@ -21,6 +21,7 @@ class TransactionTypeDao {
         'transaction_cat_id',
         'transaction_type_name',
         'transaction_type_color',
+        'transaction_type_icon'
       ],
     );
     return List.generate(
