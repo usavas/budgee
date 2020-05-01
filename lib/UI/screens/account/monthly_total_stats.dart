@@ -93,9 +93,7 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                     ],
                   );
                 } else {
-                  return Placeholder(
-                    paddingBtwTexts: _paddingBtwTexts,
-                  );
+                  return Center(child: Text('Fetching statistics'),);
                 }
               }),
         )),

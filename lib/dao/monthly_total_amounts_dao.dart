@@ -29,7 +29,9 @@ class MonthlyTotalAmountsDao {
     final List<Map<String, dynamic>> maps =
         await _db.rawQuery(query, [_month, year.toString(), transactionCatId]);
 
-    return (maps.length == 0) ? MonthlyTotalAmount(amount: 0.0) : List.generate(
-        maps.length, (index) => MonthlyTotalAmount.fromDbMap(maps[index])).first;
+    return (maps.length == 0)
+        ? MonthlyTotalAmount(amount: 0.0)
+        : List.generate(maps.length,
+            (index) => MonthlyTotalAmount.fromDbMap(maps[index])).first;
   }
 }

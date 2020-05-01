@@ -1,4 +1,6 @@
 import 'package:expenses/UI/helper/date_formatter.dart';
+import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +20,7 @@ class TransactionHistory extends StatefulWidget {
 class _TransactionHistoryState extends State<TransactionHistory> {
   @override
   Widget build(BuildContext context) {
+    var _paddingValue = MediaQuery.of(context).size.width * 0.02;
     return Container(
         color: Theme.of(context).backgroundColor,
         child: Column(
@@ -25,13 +28,17 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             Expanded(
                 flex: 1,
                 child: Container(
-                  margin:
-                      EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                  margin: EdgeInsets.all(_paddingValue),
                   decoration: BoxDecoration(border: Border.all()),
                   child: Center(
                     child: Text("Advertisement here"),
                   ),
                 )),
+            Expanded(
+                flex: 1,
+                child: Container(
+                    margin: EdgeInsets.all(_paddingValue),
+                    child: CurrentMonth(_paddingValue, _paddingValue))),
             ChangeNotifierProvider(
                 create: (context) => TransactionHistoryProvider(),
                 child: Expanded(flex: 5, child: TransactionInfoDtoList()))
@@ -43,9 +50,12 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 class TransactionInfoDtoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CurrentMonthYearProvider monthProvider =
+        Provider.of<CurrentMonthYearProvider>(context);
     var provider = Provider.of<TransactionHistoryProvider>(context);
     return FutureBuilder(
-      future: provider.getTransactionInfoDtos(),
+      future: provider.getTransactionInfoDtosByMonth(
+          monthProvider.currentYear, monthProvider.currentMonth),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<TransactionInfoDto> _transactions = snapshot.data;
@@ -73,9 +83,10 @@ class TransactionInfoDtoList extends StatelessWidget {
             ),
           );
         } else {
+          print('Fetching the data...');
           return Scaffold(
             body: Center(
-              child: Text('Could not fetch the data'),
+              child: Text('Fetching the data'),
             ),
           );
         }
@@ -90,6 +101,8 @@ class TransactionInfoDtoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CurrentMonthYearProvider monthProvider =
+        Provider.of<CurrentMonthYearProvider>(context, listen: false);
     var provider =
         Provider.of<TransactionHistoryProvider>(context, listen: false);
     return Card(
@@ -125,7 +138,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
                             fontSizeFactor: 0.8, color: Colors.grey[600]),
                       ),
                       //? delete this widget below
-                       Text(
+                      Text(
                         transactionInfo.transactionDate.toIso8601String(),
                         style: Theme.of(context).textTheme.body1.apply(
                             fontSizeFactor: 0.8, color: Colors.grey[600]),
@@ -154,7 +167,9 @@ class TransactionInfoDtoTile extends StatelessWidget {
                       TransactionRepository()
                           .deleteTransaction(transactionInfo.transactionId)
                           .then((deletedId) {
-                        provider.updateTransactionInfoDtos();
+                        provider.updateTransactionInfoDtosByMonth(
+                            monthProvider.currentYear,
+                            monthProvider.currentMonth);
 
                         Scaffold.of(context).showSnackBar(SnackBar(
                           content: Row(
@@ -167,7 +182,9 @@ class TransactionInfoDtoTile extends StatelessWidget {
                                     TransactionRepository().insertTransaction(
                                         TransactionInfo.fromTransactionInfoDto(
                                             transactionInfo));
-                                    provider.updateTransactionInfoDtos();
+                                    provider.updateTransactionInfoDtosByMonth(
+                                        monthProvider.currentYear,
+                                        monthProvider.currentMonth);
                                   })
                             ],
                           ),
