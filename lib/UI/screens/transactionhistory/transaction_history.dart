@@ -124,6 +124,12 @@ class TransactionInfoDtoTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.body1.apply(
                             fontSizeFactor: 0.8, color: Colors.grey[600]),
                       ),
+                      //? delete this widget below
+                       Text(
+                        transactionInfo.transactionDate.toIso8601String(),
+                        style: Theme.of(context).textTheme.body1.apply(
+                            fontSizeFactor: 0.8, color: Colors.grey[600]),
+                      ),
                     ],
                   ),
                   (transactionInfo.transactionCategoryName == 'expense')

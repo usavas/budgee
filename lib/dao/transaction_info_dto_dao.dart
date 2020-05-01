@@ -21,6 +21,7 @@ class TransactionInfoDtoDao {
         FROM transaction_info t, transaction_type tt, transaction_cat tc
         WHERE t.transaction_type_id = tt.id AND tt.transaction_cat_id = tc.id
         AND transaction_date between ? and ?
+      ORDER BY transaction_date DESC
       ''',
       <dynamic>[start, end],
     );
@@ -44,6 +45,7 @@ class TransactionInfoDtoDao {
       transaction_type_color
         FROM transaction_info t, transaction_type tt, transaction_cat tc
         WHERE t.transaction_type_id = tt.id AND tt.transaction_cat_id = tc.id
+      ORDER BY transaction_date DESC
       ''');
 
     return List.generate(

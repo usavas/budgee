@@ -26,7 +26,7 @@ class _AddTransactionState extends State<AddTransaction> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime.now().add(new Duration(days: -365)),
+      firstDate: DateTime.now().add(new Duration(days: -61)),
       lastDate: DateTime.now().add(new Duration(days: 61)),
       builder: (BuildContext context, Widget child) {
         return Theme(
@@ -42,7 +42,8 @@ class _AddTransactionState extends State<AddTransaction> {
     );
     if (picked != null && picked != selectedDate)
       setState(() {
-        selectedDate = picked;
+        // Adding some hours (apparently equal or greater than 9) is required to include the first day of month in the month-group
+        selectedDate = picked.add(Duration(hours: 12, minutes: 30));
       });
   }
 
@@ -58,7 +59,6 @@ class _AddTransactionState extends State<AddTransaction> {
     final Padding _padding = Padding(
       padding: EdgeInsets.only(top: 0),
     );
-
 
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -128,7 +128,8 @@ class _AddTransactionState extends State<AddTransaction> {
                                   transactionAmount:
                                       double.parse(_amountController.text),
                                   transactionDate: selectedDate,
-                                  transactionTypeId: widget.transactionType.transactionTypeId,
+                                  transactionTypeId:
+                                      widget.transactionType.transactionTypeId,
                                 ))
                                     .then((insertedId) {
                                   log("inserted: " + insertedId.toString());
