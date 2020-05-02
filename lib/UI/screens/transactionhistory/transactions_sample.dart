@@ -1,6 +1,6 @@
 import 'package:expenses/models/transaction_info.dart';
 
-List<TransactionInfo> _transactionsMock = <TransactionInfo>[
+final List<TransactionInfo> _transactionsMock = <TransactionInfo>[
     TransactionInfo(
       transactionDate: DateTime.now(),
       transactionAmount: 600,

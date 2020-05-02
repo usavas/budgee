@@ -1,4 +1,5 @@
 import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:expenses/models/monthly_transaction_types_totals.dart';
 import 'package:expenses/repositories/monthly_transaction_types_totals_repository.dart';
 import 'package:provider/provider.dart';
@@ -15,25 +16,13 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
   Widget build(BuildContext context) {
     final double edgeinsets = MediaQuery.of(context).size.width * 0.2;
 
-    // Map<String, double> dataMap = Map();
-    // dataMap.putIfAbsent("Yemek", () => 400);
-    // dataMap.putIfAbsent("Kira", () => 1200);
-    // dataMap.putIfAbsent("Benzin", () => 600);
-    // dataMap.putIfAbsent("Hediye", () => 150);
-
-    // List<Color> colorList = [
-    //   Colors.red,
-    //   Colors.green,
-    //   Colors.blue,
-    //   Colors.yellow,
-    // ];
-
     return SafeArea(
         child: Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
             body: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  BannerAdvertisementView(),
                   CurrentMonth(16.0, 16.0),
                   Padding(
                     padding: EdgeInsets.all(16),

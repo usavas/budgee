@@ -1,4 +1,5 @@
 import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expenses/models/transaction_type.dart';
@@ -13,6 +14,14 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  // AdmobBannerSize bannerAdSize;
+
+  @override
+  void initState() {
+    super.initState();
+    // bannerAdSize = AdmobBannerSize.SMART_BANNER;
+  }
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
@@ -23,13 +32,9 @@ class _AccountState extends State<Account> {
       body: Column(children: <Widget>[
         Expanded(
           flex: 3,
-          child: Container(
-              margin: EdgeInsets.only(
-                  left: _paddingWidth,
-                  right: _paddingWidth,
-                  top: _paddingHeight),
-              decoration: BoxDecoration(border: Border.all()),
-              child: Center(child: Text("Advertisement here"))),
+          child: Center(
+            child: BannerAdvertisementView()
+          ),
         ),
         Expanded(
           flex: 2,

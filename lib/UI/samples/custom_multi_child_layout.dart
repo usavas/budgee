@@ -63,8 +63,8 @@ class YourLayoutDelegate extends MultiChildLayoutDelegate {
       positionChild(
         2,
         Offset(
-          100, //leadingSize.width, // This will place child 2 to the right of child 1.
-          100, //size.height / 2 - secondSize.height / 2, // Centers the second child vertically.
+          leadingSize.width, // This will place child 2 to the right of child 1.
+          size.height / 2 - secondSize.height / 2, // Centers the second child vertically.
         ),
       );
     }

@@ -2,6 +2,7 @@ import 'package:expenses/UI/helper/date_formatter.dart';
 import 'package:expenses/UI/screens/account/current_month.dart';
 import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
+import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/transaction_info_dto.dart';
@@ -27,12 +28,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
           children: <Widget>[
             Expanded(
                 flex: 1,
-                child: Container(
-                  margin: EdgeInsets.all(_paddingValue),
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: Center(
-                    child: Text("Advertisement here"),
-                  ),
+                child: Center(
+                  child: BannerAdvertisementView(),
                 )),
             Expanded(
                 flex: 1,
@@ -129,7 +126,9 @@ class TransactionInfoDtoTile extends StatelessWidget {
                                 fontFamily: 'MaterialIcons'),
                             color: Color(transactionInfo.transactionTypeColor),
                           ),
-                          Padding(padding: EdgeInsets.all(4.0),),
+                          Padding(
+                            padding: EdgeInsets.all(4.0),
+                          ),
                           Text(transactionInfo.transactionType),
                         ],
                       ),
