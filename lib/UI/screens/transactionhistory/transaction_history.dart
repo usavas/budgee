@@ -129,6 +129,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
                                 fontFamily: 'MaterialIcons'),
                             color: Color(transactionInfo.transactionTypeColor),
                           ),
+                          Padding(padding: EdgeInsets.all(4.0),),
                           Text(transactionInfo.transactionType),
                         ],
                       ),
