@@ -42,7 +42,7 @@ class _AddTransactionState extends State<AddTransaction> {
     );
     if (picked != null && picked != selectedDate)
       setState(() {
-        // Adding some hours (apparently equal or greater than 9) is required to include the first day of month in the month-group
+        //? Adding some hours (apparently equal or greater than 9) is required to include the first day of month in the month-group
         selectedDate = picked.add(Duration(hours: 12, minutes: 30));
       });
   }
@@ -74,14 +74,19 @@ class _AddTransactionState extends State<AddTransaction> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            getOnlyDateString(selectedDate).toString(),
-                            textAlign: TextAlign.start,
+                          Expanded(
+                            flex: 4,
+                            child: Text(
+                              getOnlyDateString(selectedDate).toString(),
+                              textAlign: TextAlign.start,
+                            ),
                           ),
-                          FlatButton(
-                            child: Text("Select a Date"),
-                            onPressed: () => _selectDate(context),
-                          )
+                          Expanded(
+                              flex: 3,
+                              child: FlatButton(
+                                child: Text("Select a Date"),
+                                onPressed: () => _selectDate(context),
+                              )),
                         ],
                       ),
                       _padding,

@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
-import 'package:expenses/UI/assets/admob_helper.dart';
+import 'package:expenses/UI/helper/admob_helper.dart';
+import 'package:expenses/UI/screens/widgets/advertisement_placeholder.dart';
 import 'package:flutter/material.dart';
 
 class BannerAdvertisementView extends StatelessWidget {
@@ -7,6 +8,10 @@ class BannerAdvertisementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return AdvertisementPlaceHolder();
+  }
+
+  Widget _getAddWidget(){
     return Container(
         child: AdmobBanner(
       adUnitId: AdmobHelper.admobTestBannerAdId,
