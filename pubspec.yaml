@@ -73,6 +73,7 @@ flutter:
         - asset: fonts/OpenSans-SemiBold.ttf
           weight: 600
 
+
   
     # - family: RobotoMono
     #   fonts:

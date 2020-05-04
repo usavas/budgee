@@ -40,10 +40,9 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
         child: Card(
             child: Container(
           padding: EdgeInsets.only(
-            left: _paddingAroundLeftRight,
-            right: _paddingAroundLeftRight,
-            top: _paddingAboveContent
-          ),
+              left: _paddingAroundLeftRight,
+              right: _paddingAroundLeftRight,
+              top: _paddingAboveContent),
           alignment: Alignment.centerLeft,
           child: FutureBuilder<List<MonthlyTotalAmount>>(
               future: Future.wait([
@@ -89,8 +88,10 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                   );
                 } else {
                   return Center(
-                    // child: Text('Fetching statistics'),
-                  );
+
+                      // child: Text('Fetching statistics'),
+
+                      );
                 }
               }),
         )),
