@@ -23,7 +23,10 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   BannerAdvertisementView(),
-                  CurrentMonth(16.0, 16.0),
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                  ),
+                  CurrentMonth(),
                   Padding(
                     padding: EdgeInsets.all(16),
                   ),
@@ -54,7 +57,8 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
                                         _getDataMapFromTransactionTypeTotals(
                                             snapshot.data),
                                         [
-                                          ...snapshot.data.map((t) => Color(t.transactionTypeColor))
+                                          ...snapshot.data.map((t) =>
+                                              Color(t.transactionTypeColor))
                                         ],
                                       )
                                       // ExpenseChart.withSampleData(),

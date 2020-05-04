@@ -34,7 +34,6 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                 builder: (context) => MonthlyTotalStatsDetailed()));
       },
       child: Container(
-        color: Theme.of(context).backgroundColor,
         padding: EdgeInsets.only(left: _paddingWidth, right: _paddingWidth),
         child: Card(
             child: Container(

@@ -24,21 +24,15 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
-    var _paddingWidth = _size.width * 0.03;
-    var _paddingHeight = _size.width * 0.01;
-
     return Scaffold(
       body: Column(children: <Widget>[
         Expanded(
           flex: 5,
-          child: Center(
             child: BannerAdvertisementView()
-          ),
         ),
         Expanded(
           flex: 4,
-          child: CurrentMonth(_paddingWidth, _paddingHeight),
+          child: CurrentMonth(),
         ),
         Expanded(
           flex: 7,

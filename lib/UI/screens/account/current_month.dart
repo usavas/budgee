@@ -4,47 +4,43 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CurrentMonth extends StatelessWidget {
-  const CurrentMonth(this.paddingWidth, this.paddingHeight, {Key key})
-      : super(key: key);
+  const CurrentMonth({Key key}) : super(key: key);
 
-  final double paddingWidth;
-  final double paddingHeight;
+  // final double paddingWidth;
+  // final double paddingHeight;
 
   @override
   Widget build(BuildContext context) {
     CurrentMonthYearProvider monthProvider =
         Provider.of<CurrentMonthYearProvider>(context);
 
+    var _paddingWidth = MediaQuery.of(context).size.width * 0.03;
+
     return Container(
-      child: Container(
-          color: Theme.of(context).backgroundColor,
-          padding: EdgeInsets.only(
-              left: paddingWidth, right: paddingWidth),
+        padding: EdgeInsets.symmetric(horizontal: _paddingWidth),
+        child: Center(
           child: Card(
-            child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      color: Theme.of(context).textTheme.body1.color,
-                      onPressed: () {
-                        monthProvider.decreaseMonth();
-                      },
-                    ),
-                    Text(getCurrMonthYear(DateTime(monthProvider.currentYear,
-                        monthProvider.currentMonth))),
-                    IconButton(
-                      icon: Icon(Icons.arrow_forward),
-                      color: Theme.of(context).textTheme.body1.color,
-                      onPressed: () {
-                        monthProvider.increaseMonth();
-                      },
-                    ),
-                  ],
-                )),
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: Theme.of(context).textTheme.body1.color,
+                onPressed: () {
+                  monthProvider.decreaseMonth();
+                },
+              ),
+              Text(getCurrMonthYear(DateTime(
+                  monthProvider.currentYear, monthProvider.currentMonth))),
+              IconButton(
+                icon: Icon(Icons.arrow_forward),
+                color: Theme.of(context).textTheme.body1.color,
+                onPressed: () {
+                  monthProvider.increaseMonth();
+                },
+              ),
+            ],
           )),
-    );
+        ));
   }
 }

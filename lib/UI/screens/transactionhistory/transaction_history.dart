@@ -23,27 +23,25 @@ class TransactionHistory extends StatefulWidget {
 class _TransactionHistoryState extends State<TransactionHistory> {
   @override
   Widget build(BuildContext context) {
-    var _paddingValue = MediaQuery.of(context).size.width * 0.02;
     return Container(
         color: Theme.of(context).backgroundColor,
         child: Column(
           children: <Widget>[
             Expanded(
-                flex: 3,
+                flex: 5,
                 child: Center(
                   child: BannerAdvertisementView(),
                 )),
             Expanded(
-                flex: 2,
+                flex: 4,
                 child: Container(
-                    margin: EdgeInsets.all(_paddingValue),
-                    child: CurrentMonth(_paddingValue, _paddingValue))),
+                    child: CurrentMonth())),
             Expanded(
-              flex: 3,
+              flex: 6,
               child: MonthlyTotalStats(),
             ),
             Expanded(
-                flex: 10,
+                flex: 20,
                 child: ChangeNotifierProvider(
                     create: (context) => TransactionHistoryProvider(),
                     child: TransactionInfoDtoList())),
