@@ -37,7 +37,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 child: Container(
                     child: CurrentMonth())),
             Expanded(
-              flex: 6,
+              flex: 7,
               child: MonthlyTotalStats(),
             ),
             Expanded(
