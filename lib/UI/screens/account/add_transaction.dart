@@ -75,16 +75,16 @@ class _AddTransactionState extends State<AddTransaction> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Expanded(
-                            flex: 4,
+                            flex: 3,
                             child: Text(
                               getOnlyDateString(selectedDate).toString(),
                               textAlign: TextAlign.start,
                             ),
                           ),
                           Expanded(
-                              flex: 3,
+                              flex: 2,
                               child: FlatButton(
-                                child: Text("Select a Date"),
+                                child: Center(child: Text("Select a Date")),
                                 onPressed: () => _selectDate(context),
                               )),
                         ],

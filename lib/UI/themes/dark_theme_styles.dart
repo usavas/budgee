@@ -29,7 +29,7 @@ class Styles {
       textTheme: TextTheme(
           body1: TextStyle(
               fontFamily: 'OpenSans',
-              fontSize: 18,
+              fontSize: 16,
               color: isDarkTheme ? Colors.white70 : Colors.black87),
           body2: TextStyle(
               fontFamily: 'OpenSans',
@@ -44,9 +44,11 @@ class Styles {
           ? ButtonThemeData(
               buttonColor: Color(0xffAF1A24),
               padding: EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
               textTheme: ButtonTextTheme.primary)
           : ButtonThemeData(
               padding: EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
               textTheme: ButtonTextTheme.primary
           ),
 

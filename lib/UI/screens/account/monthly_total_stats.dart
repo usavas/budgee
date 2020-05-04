@@ -19,10 +19,11 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
   @override
   Widget build(BuildContext context) {
     var _paddingWidth = widget.size.width * 0.03;
-    var _paddingHeight = widget.size.width * 0.02;
+    var _paddingHeight = widget.size.width * 0.01;
 
     double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
-    double _paddingAroundContent = widget.size.height <= 600 ? 4 : 14;
+    double _paddingAroundContent = widget.size.height <= 500 ? 4 : 8;
+    double _paddingAroundLeftRight = widget.size.height <= 500 ? 8 : 16;
 
     CurrentMonthYearProvider monthYearProvider =
         Provider.of<CurrentMonthYearProvider>(context);
@@ -42,12 +43,12 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
             child: Container(
           padding: widget.size.height <= 600
               ? EdgeInsets.only(
-                  left: _paddingAroundContent,
-                  right: _paddingAroundContent,
+                  left: _paddingAroundLeftRight,
+                  right: _paddingAroundLeftRight,
                   top: _paddingAroundContent)
               : EdgeInsets.only(
-                  left: _paddingAroundContent,
-                  right: _paddingAroundContent,
+                  left: _paddingAroundLeftRight,
+                  right: _paddingAroundLeftRight,
                   top: _paddingAroundContent),
           alignment: Alignment.centerLeft,
           child: FutureBuilder<List<MonthlyTotalAmount>>(
@@ -110,7 +111,7 @@ class AccountBalanceInfoRow extends StatelessWidget {
   AccountBalanceInfoRow(this.text1, this.text2, this.color);
   @override
   Widget build(BuildContext context) {
-    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1;
+    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1.apply(fontSizeFactor: 1);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -26,26 +26,26 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     var _paddingWidth = _size.width * 0.03;
-    var _paddingHeight = _size.width * 0.02;
+    var _paddingHeight = _size.width * 0.01;
 
     return Scaffold(
       body: Column(children: <Widget>[
         Expanded(
-          flex: 3,
+          flex: 5,
           child: Center(
             child: BannerAdvertisementView()
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 4,
           child: CurrentMonth(_paddingWidth, _paddingHeight),
         ),
         Expanded(
-          flex: 4,
+          flex: 7,
           child: MonthlyTotalStats(_size),
         ),
         Expanded(
-          flex: 10,
+          flex: 20,
           child: Container(
             // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
             // color: Theme.of(context).backgroundColor,
@@ -72,7 +72,8 @@ class TransactionTypesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
-    double _spacingBtwTransactionTypes = _size.height <= 600 ? 0 : 8;
+    double _spacingBtwTransactionTypesX = _size.height <= 600 ? 4 : 4;
+    double _spacingBtwTransactionTypesY = _size.height <= 600 ? 0 : 4;
 
     List<TransactionTypeWidget> transactionTypesWidgets = new List();
     transactionTypes.forEach((type) => {
@@ -85,8 +86,8 @@ class TransactionTypesPage extends StatelessWidget {
         margin: EdgeInsets.only(
             left: _size.width * 0.03,
             right: _size.width * 0.03,
-            top: _size.width * 0.02,
-            bottom: _size.width * 0.02),
+            top: _size.width * 0.01,
+            bottom: _size.width * 0.01),
         child: Card(
           child: Align(
             alignment: Alignment.center,
@@ -94,8 +95,8 @@ class TransactionTypesPage extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               child: Wrap(
                 direction: Axis.horizontal,
-                spacing: _spacingBtwTransactionTypes,
-                runSpacing: _spacingBtwTransactionTypes,
+                spacing: _spacingBtwTransactionTypesX,
+                runSpacing: _spacingBtwTransactionTypesY,
                 children: <Widget>[
                   ...transactionTypesWidgets,
                 ],
@@ -118,27 +119,27 @@ class TransactionTypeWidget extends StatelessWidget {
     const Color _color = Colors.black87;
 
     var _size = MediaQuery.of(context).size;
-    double _cardSize = _size.width * 0.20;
+    double _cardSize = _size.width * 0.21;
     double _fontSize;
-    double _iconSize = 24;
+    double _iconSize;
     double _paddingTopIcon;
 
-    if (_size.height <= 600) {
-      _paddingTopIcon = 6.0;
-    } else if (_size.height <= 1080) {
-      _paddingTopIcon = 8.0;
+    if (_size.height <= 300) {
+      _paddingTopIcon = 2.0;
+    } else if (_size.height <= 600) {
+      _paddingTopIcon = 4.0;
     } else {
-      _paddingTopIcon = 16.0;
+      _paddingTopIcon = 8.0;
     }
 
-    if (_size.width <= 400) {
+    if (_size.width <= 300) {
       _fontSize = 10;
       _iconSize = 20;
-    } else if (_size.width < 720) {
-      _fontSize = 12;
+    } else if (_size.width <= 600) {
+      _fontSize = 10;
       _iconSize = 24;
     } else {
-      _fontSize = 20;
+      _fontSize = 12;
       _iconSize = 32;
     }
 
@@ -150,10 +151,10 @@ class TransactionTypeWidget extends StatelessWidget {
           color: Color(transactionType.transactionTypeColor),
           elevation: 4,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: InkWell(
             customBorder:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onTap: () {
               Navigator.push(
                   context,
