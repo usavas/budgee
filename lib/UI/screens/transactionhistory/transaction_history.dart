@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expenses/UI/helper/date_formatter.dart';
 import 'package:expenses/UI/screens/account/current_month.dart';
 import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
@@ -115,100 +116,115 @@ class TransactionInfoDtoTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Icon(
-                            IconData(transactionInfo.transactionTypeIcon,
-                                fontFamily: 'MaterialIcons'),
-                            color: Color(transactionInfo.transactionTypeColor),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(4.0),
-                          ),
-                          Text(transactionInfo.transactionType),
-                        ],
-                      ),
-                      Text(
-                        getOnlyDateString(transactionInfo.transactionDate),
-                        style: Theme.of(context).textTheme.body1.apply(
-                            fontSizeFactor: 0.8, color: Colors.grey[600]),
-                      ),
-                      //? delete this widget below
-                      Text(
-                        transactionInfo.transactionDate.toIso8601String(),
-                        style: Theme.of(context).textTheme.body1.apply(
-                            fontSizeFactor: 0.8, color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                  (transactionInfo.transactionCategoryName == 'expense')
-                      ? Text(
-                          '-' +
-                              DoubleHelper.convertDobleTo2DecimalPlaces(
-                                  transactionInfo.transactionAmount),
-                          style: Theme.of(context)
-                              .textTheme
-                              .body1
-                              .apply(color: Colors.red.withAlpha(190)))
-                      : Text(
-                          DoubleHelper.convertDobleTo2DecimalPlaces(
-                              transactionInfo.transactionAmount),
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Icon(
+                              IconData(transactionInfo.transactionTypeIcon,
+                                  fontFamily: 'MaterialIcons'),
+                              color:
+                                  Color(transactionInfo.transactionTypeColor),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(4.0),
+                            ),
+                            Text(transactionInfo.transactionType),
+                          ],
                         ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.grey[300],
+                        AutoSizeText(
+                          getOnlyDateString(transactionInfo.transactionDate),
+                          style: Theme.of(context).textTheme.body1.apply(
+                              fontSizeFactor: 0.8, color: Colors.grey[600]),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      TransactionRepository()
-                          .deleteTransaction(transactionInfo.transactionId)
-                          .then((deletedId) {
-                        provider.updateTransactionInfoDtosByMonth(
-                            monthProvider.currentYear,
-                            monthProvider.currentMonth);
-
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Text('Transaction info deleted'),
-                              FlatButton(
-                                  child: Text('UNDO'),
-                                  onPressed: () {
-                                    TransactionRepository().insertTransaction(
-                                        TransactionInfo.fromTransactionInfoDto(
-                                            transactionInfo));
-                                    provider.updateTransactionInfoDtosByMonth(
-                                        monthProvider.currentYear,
-                                        monthProvider.currentMonth);
-                                  })
-                            ],
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: <Widget>[
+                        (transactionInfo.transactionCategoryName == 'expense')
+                            ? Text(
+                                '-' +
+                                    DoubleHelper.convertDobleTo2DecimalPlaces(
+                                        transactionInfo.transactionAmount),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .body1
+                                    .apply(color: Colors.red.withAlpha(190)))
+                            : Text(
+                                DoubleHelper.convertDobleTo2DecimalPlaces(
+                                  transactionInfo.transactionAmount,
+                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .body1
+                                    .apply(color: Colors.green.withAlpha(190))),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.grey[300],
                           ),
-                        ));
-                      });
-                    },
+                          onPressed: () {
+                            TransactionRepository()
+                                .deleteTransaction(
+                                    transactionInfo.transactionId)
+                                .then((deletedId) {
+                              provider.updateTransactionInfoDtosByMonth(
+                                  monthProvider.currentYear,
+                                  monthProvider.currentMonth);
+
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Text('Transaction info deleted'),
+                                    FlatButton(
+                                        child: Text('UNDO'),
+                                        onPressed: () {
+                                          TransactionRepository()
+                                              .insertTransaction(TransactionInfo
+                                                  .fromTransactionInfoDto(
+                                                      transactionInfo));
+                                          provider
+                                              .updateTransactionInfoDtosByMonth(
+                                                  monthProvider.currentYear,
+                                                  monthProvider.currentMonth);
+                                        })
+                                  ],
+                                ),
+                              ));
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
               Padding(padding: const EdgeInsets.only(top: 10)),
               if (transactionInfo.transactionNote != null &&
                   transactionInfo.transactionNote != '')
-                Row(
-                  children: <Widget>[
-                    Text(
-                      transactionInfo.transactionNote,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: Theme.of(context)
-                          .textTheme
-                          .body2
-                          .apply(fontSizeFactor: 1.2, color: Colors.grey[700]),
-                    ),
-                  ],
+                Text(
+                  transactionInfo.transactionNote,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .body2
+                      .apply(fontSizeFactor: 1.2, color: Colors.grey[700]),
                 ),
             ],
           )),
