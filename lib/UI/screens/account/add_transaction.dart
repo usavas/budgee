@@ -64,7 +64,7 @@ class _AddTransactionState extends State<AddTransaction> {
         backgroundColor: Theme.of(context).backgroundColor,
         body: Container(
             margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
-            child: Center(
+            child: Container(
               child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
@@ -119,35 +119,45 @@ class _AddTransactionState extends State<AddTransaction> {
                           labelText: 'Notes (Optional)',
                         ),
                       ),
-                      _padding,
-                      SizedBox(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: RaisedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                TransactionDao()
-                                    .insertTransaction(TransactionInfo(
-                                  transactionNote: _noteController.text,
-                                  transactionAmount:
-                                      double.parse(_amountController.text),
-                                  transactionDate: selectedDate,
-                                  transactionTypeId:
-                                      widget.transactionType.transactionTypeId,
-                                ))
-                                    .then((insertedId) {
-                                  log("inserted: " + insertedId.toString());
-                                });
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(
-                              'Add Transaction',
-                              style: Theme.of(context).textTheme.body1,
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {},
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 10),
+                          ),
+                          Expanded
+                          (
+                            child: RaisedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  TransactionDao()
+                                      .insertTransaction(TransactionInfo(
+                                    transactionNote: _noteController.text,
+                                    transactionAmount:
+                                        double.parse(_amountController.text),
+                                    transactionDate: selectedDate,
+                                    transactionTypeId: widget
+                                        .transactionType.transactionTypeId,
+                                  ))
+                                      .then((insertedId) {
+                                    log("inserted: " + insertedId.toString());
+                                  });
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Text(
+                                'Add Transaction',
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
