@@ -19,7 +19,7 @@ class CurrentMonth extends StatelessWidget {
       child: Container(
           color: Theme.of(context).backgroundColor,
           padding: EdgeInsets.only(
-              left: paddingWidth, right: paddingWidth, top: paddingHeight),
+              left: paddingWidth, right: paddingWidth),
           child: Card(
             child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),

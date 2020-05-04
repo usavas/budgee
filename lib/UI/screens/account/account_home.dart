@@ -42,13 +42,11 @@ class _AccountState extends State<Account> {
         ),
         Expanded(
           flex: 7,
-          child: MonthlyTotalStats(_size),
+          child: MonthlyTotalStats(),
         ),
         Expanded(
           flex: 20,
           child: Container(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-            // color: Theme.of(context).backgroundColor,
             child: PageView(
               controller: PageController(initialPage: 0),
               children: <Widget>[

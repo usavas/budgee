@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expenses/UI/helper/date_formatter.dart';
 import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/account/monthly_total_stats.dart';
 import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
@@ -28,18 +29,24 @@ class _TransactionHistoryState extends State<TransactionHistory> {
         child: Column(
           children: <Widget>[
             Expanded(
-                flex: 1,
+                flex: 3,
                 child: Center(
                   child: BannerAdvertisementView(),
                 )),
             Expanded(
-                flex: 1,
+                flex: 2,
                 child: Container(
                     margin: EdgeInsets.all(_paddingValue),
                     child: CurrentMonth(_paddingValue, _paddingValue))),
-            ChangeNotifierProvider(
-                create: (context) => TransactionHistoryProvider(),
-                child: Expanded(flex: 5, child: TransactionInfoDtoList()))
+            Expanded(
+              flex: 3,
+              child: MonthlyTotalStats(),
+            ),
+            Expanded(
+                flex: 10,
+                child: ChangeNotifierProvider(
+                    create: (context) => TransactionHistoryProvider(),
+                    child: TransactionInfoDtoList())),
           ],
         ));
   }
@@ -104,12 +111,11 @@ class TransactionInfoDtoTile extends StatelessWidget {
     var provider =
         Provider.of<TransactionHistoryProvider>(context, listen: false);
     return Card(
-      // color: Color(transactionInfo.transactionTypeColor),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 2,
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

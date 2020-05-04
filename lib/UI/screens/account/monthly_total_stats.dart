@@ -7,9 +7,7 @@ import 'package:provider/provider.dart';
 import 'monthly_transaction_type_totals.dart';
 
 class MonthlyTotalStats extends StatefulWidget {
-  MonthlyTotalStats(this.size, {Key key}) : super(key: key);
-
-  final Size size;
+  MonthlyTotalStats({Key key}) : super(key: key);
 
   @override
   _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
@@ -18,12 +16,12 @@ class MonthlyTotalStats extends StatefulWidget {
 class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
   @override
   Widget build(BuildContext context) {
-    var _paddingWidth = widget.size.width * 0.03;
-    var _paddingHeight = widget.size.width * 0.01;
+    var _paddingWidth = MediaQuery.of(context).size.width * 0.03;
+    // var _paddingHeight = MediaQuery.of(context).size.width * 0.01;
 
-    double _paddingBtwTexts = widget.size.height <= 600 ? 0 : 4;
-    double _paddingAroundContent = widget.size.height <= 500 ? 4 : 8;
-    double _paddingAroundLeftRight = widget.size.height <= 500 ? 8 : 16;
+    double _paddingBtwTexts = MediaQuery.of(context).size.height <= 600 ? 0 : 4;
+    double _paddingAroundContent = MediaQuery.of(context).size.height <= 500 ? 4 : 8;
+    double _paddingAroundLeftRight = MediaQuery.of(context).size.height <= 500 ? 8 : 16;
 
     CurrentMonthYearProvider monthYearProvider =
         Provider.of<CurrentMonthYearProvider>(context);
@@ -37,11 +35,10 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
       },
       child: Container(
         color: Theme.of(context).backgroundColor,
-        padding: EdgeInsets.only(
-            left: _paddingWidth, right: _paddingWidth, top: _paddingHeight),
+        padding: EdgeInsets.only(left: _paddingWidth, right: _paddingWidth),
         child: Card(
             child: Container(
-          padding: widget.size.height <= 600
+          padding: MediaQuery.of(context).size.height <= 600
               ? EdgeInsets.only(
                   left: _paddingAroundLeftRight,
                   right: _paddingAroundLeftRight,

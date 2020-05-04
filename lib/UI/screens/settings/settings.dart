@@ -15,14 +15,40 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
-    return Container(
-      child: Center(
-          child: Checkbox(
-        value: themeChange.isDarkTheme,
-        onChanged: (bool value) {
-          themeChange.isDarkTheme = value;
-        },
-      )),
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Switch(
+                  value: themeChange.isDarkTheme,
+                  onChanged: (bool value) {
+                    themeChange.isDarkTheme = !themeChange.isDarkTheme;
+                  },
+                ),
+                Padding(padding: EdgeInsets.only(right: 8),),
+                Text('Dark Theme'),
+              ]),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                children: <Widget>[
+                  FlatButton(
+                    child: Text('Remove the ads'),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ),
+            Divider(),
+          ]),
+        ),
+      ),
     );
   }
 }
