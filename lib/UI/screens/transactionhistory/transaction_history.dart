@@ -141,8 +141,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
                         ),
                         AutoSizeText(
                           getOnlyDateString(transactionInfo.transactionDate),
-                          style: Theme.of(context).textTheme.body1.apply(
-                              fontSizeFactor: 0.8, color: Colors.grey[600]),
+                          style: Theme.of(context).textTheme.body2.apply(),
                         ),
                       ],
                     ),
@@ -218,17 +217,20 @@ class TransactionInfoDtoTile extends StatelessWidget {
                   )
                 ],
               ),
-              Padding(padding: const EdgeInsets.only(top: 10)),
+              // Padding(padding: const EdgeInsets.only(top: 10)),
               if (transactionInfo.transactionNote != null &&
                   transactionInfo.transactionNote != '')
-                Text(
-                  transactionInfo.transactionNote,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: Theme.of(context)
-                      .textTheme
-                      .body2
-                      .apply(fontSizeFactor: 1.2, color: Colors.grey[700]),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 16.0),
+                  child: Text(
+                    transactionInfo.transactionNote,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: Theme.of(context)
+                        .textTheme
+                        .body2
+                        .apply(fontSizeFactor: 1.1, color: Colors.grey[600]),
+                  ),
                 ),
             ],
           )),

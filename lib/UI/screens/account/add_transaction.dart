@@ -127,13 +127,16 @@ class _AddTransactionState extends State<AddTransaction> {
                         children: <Widget>[
                           RaisedButton(
                             child: Text('Cancel'),
-                            onPressed: () {},
+                            onPressed: () {
+                              // to dismiss the keyboard
+                              FocusScope.of(context).unfocus();
+                              Navigator.pop(context);
+                            },
                           ),
                           Padding(
                             padding: EdgeInsets.only(right: 10),
                           ),
-                          Expanded
-                          (
+                          Expanded(
                             child: RaisedButton(
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
@@ -149,6 +152,8 @@ class _AddTransactionState extends State<AddTransaction> {
                                       .then((insertedId) {
                                     log("inserted: " + insertedId.toString());
                                   });
+                                  // to dismiss the keyboard
+                                  FocusScope.of(context).unfocus();
                                   Navigator.pop(context);
                                 }
                               },
