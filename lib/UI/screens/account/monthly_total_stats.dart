@@ -19,9 +19,11 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
     var _paddingWidth = MediaQuery.of(context).size.width * 0.03;
     // var _paddingHeight = MediaQuery.of(context).size.width * 0.01;
 
-    double _paddingBtwTexts = MediaQuery.of(context).size.height <= 600 ? 0 : 4;
-    double _paddingAroundContent = MediaQuery.of(context).size.height <= 500 ? 4 : 8;
-    double _paddingAroundLeftRight = MediaQuery.of(context).size.height <= 500 ? 8 : 16;
+    double _paddingBtwTexts = MediaQuery.of(context).size.height <= 600 ? 4 : 6;
+    double _paddingAboveContent =
+        MediaQuery.of(context).size.height <= 500 ? 2 : 4;
+    double _paddingAroundLeftRight =
+        MediaQuery.of(context).size.height <= 500 ? 12 : 18;
 
     CurrentMonthYearProvider monthYearProvider =
         Provider.of<CurrentMonthYearProvider>(context);
@@ -37,15 +39,11 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
         padding: EdgeInsets.only(left: _paddingWidth, right: _paddingWidth),
         child: Card(
             child: Container(
-          padding: MediaQuery.of(context).size.height <= 600
-              ? EdgeInsets.only(
-                  left: _paddingAroundLeftRight,
-                  right: _paddingAroundLeftRight,
-                  top: _paddingAroundContent)
-              : EdgeInsets.only(
-                  left: _paddingAroundLeftRight,
-                  right: _paddingAroundLeftRight,
-                  top: _paddingAroundContent),
+          padding: EdgeInsets.only(
+            left: _paddingAroundLeftRight,
+            right: _paddingAroundLeftRight,
+            top: _paddingAboveContent
+          ),
           alignment: Alignment.centerLeft,
           child: FutureBuilder<List<MonthlyTotalAmount>>(
               future: Future.wait([
@@ -90,7 +88,9 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                     ],
                   );
                 } else {
-                  return Center(child: Text('Fetching statistics'),);
+                  return Center(
+                    // child: Text('Fetching statistics'),
+                  );
                 }
               }),
         )),
@@ -107,7 +107,8 @@ class AccountBalanceInfoRow extends StatelessWidget {
   AccountBalanceInfoRow(this.text1, this.text2, this.color);
   @override
   Widget build(BuildContext context) {
-    final TextStyle _textStyleSm = Theme.of(context).textTheme.body1.apply(fontSizeFactor: 1);
+    final TextStyle _textStyleSm =
+        Theme.of(context).textTheme.body1.apply(fontSizeFactor: 1);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
