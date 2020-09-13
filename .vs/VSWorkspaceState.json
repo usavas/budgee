@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\android",
+    "\\lib",
+    "\\lib\\dao",
+    "\\lib\\database",
+    "\\lib\\models",
+    "\\lib\\repositories",
+    "\\lib\\UI"
+  ],
+  "SelectedNode": "\\lib\\models\\monthly_total.dart",
+  "PreviewInSolutionExplorer": false
+}

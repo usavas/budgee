@@ -21,12 +21,12 @@ class Styles {
 
       fontFamily: _fontFamily,
       textTheme: TextTheme(
-          body1: TextStyle(
+          bodyText1: TextStyle(
               fontFamily: _fontFamily,
               fontWeight: FontWeight.w600,
               fontSize: 16,
               color: isDarkTheme ? Colors.white70 : Colors.black87),
-          body2: TextStyle(
+          bodyText2: TextStyle(
               fontFamily: _fontFamily,
               fontWeight: FontWeight.w500,
               fontSize: 12,
@@ -42,16 +42,17 @@ class Styles {
               fontWeight: FontWeight.w400,
               color: isDarkTheme ? Colors.white70 : Colors.black87),
           // this color is used for the month-year slider on datepicker widget
-          subhead: TextStyle(
+          subtitle1: TextStyle(
               fontFamily: _fontFamily,
               fontWeight: FontWeight.w400,
               color: isDarkTheme ? Colors.white70 : Colors.black87)),
 
       inputDecorationTheme: InputDecorationTheme(
-          labelStyle:
-              isDarkTheme ? TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.4))
+          labelStyle: isDarkTheme
+              ? TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.4))
               : TextStyle(fontSize: 16, color: Colors.black26),
-          hintStyle: isDarkTheme ? TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.4))
+          hintStyle: isDarkTheme
+              ? TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.4))
               : TextStyle(fontSize: 16, color: Colors.black26)),
       buttonTheme: isDarkTheme
           ? ButtonThemeData(
