@@ -109,7 +109,7 @@ class AccountBalanceInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle _textStyleSm =
-        Theme.of(context).textTheme.body1.apply(fontSizeFactor: 1);
+        Theme.of(context).textTheme.bodyText1.apply(fontSizeFactor: 1);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

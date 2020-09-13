@@ -25,7 +25,7 @@ class CurrentMonth extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.arrow_back),
-                color: Theme.of(context).textTheme.body1.color,
+                color: Theme.of(context).textTheme.bodyText1.color,
                 onPressed: () {
                   monthProvider.decreaseMonth();
                 },
@@ -34,7 +34,7 @@ class CurrentMonth extends StatelessWidget {
                   monthProvider.currentYear, monthProvider.currentMonth))),
               IconButton(
                 icon: Icon(Icons.arrow_forward),
-                color: Theme.of(context).textTheme.body1.color,
+                color: Theme.of(context).textTheme.bodyText1.color,
                 onPressed: () {
                   monthProvider.increaseMonth();
                 },

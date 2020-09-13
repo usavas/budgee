@@ -1,4 +1,4 @@
-package com.example.expenses
+package com.savas.budgee
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

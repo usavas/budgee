@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.expenses">
+    package="com.savas.budgee">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -7,8 +7,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="expenses"
-        android:icon="@mipmap/ic_launcher">
+        android:label="budgee"
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -26,10 +26,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!--TODO: change this to your own APPLICATION_ID fir for google ads-->
+        <!--TODO: change this to your own APPLICATION_ID for google ads-->
          <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-3540432919310200~4678279017"/>
         <!--REAL APP ID ca-app-pub-3540432919310200~4678279017-->
         <!--TEST APP ID ca-app-pub-3940256099942544~3347511713-->
     </application>

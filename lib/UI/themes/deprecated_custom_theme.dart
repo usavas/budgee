@@ -10,7 +10,7 @@ ThemeData themedata = ThemeData(
   appBarTheme: AppBarTheme(
       color: Color(0xFF2C373D),
       textTheme: TextTheme(
-          title: TextStyle(
+          headline1: TextStyle(
         fontFamily: 'OpenSans',
         fontSize: 18,
         fontWeight: FontWeight.bold,
@@ -18,9 +18,9 @@ ThemeData themedata = ThemeData(
   fontFamily: 'OpenSans',
   iconTheme: IconThemeData(color: Color(0xffAF1A24)),
   textTheme: TextTheme(
-      body1: TextStyle(
+      bodyText1: TextStyle(
           fontFamily: 'OpenSans', fontSize: 18, color: Colors.white70),
-      body2: TextStyle(
+      bodyText2: TextStyle(
           fontFamily: 'OpenSans', fontSize: 18, color: Colors.black87)),
   inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(fontSize: 16, color: Colors.white.withOpacity(0.3)),

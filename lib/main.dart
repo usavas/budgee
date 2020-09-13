@@ -11,7 +11,7 @@ import 'UI/screens/bottomnavigation.dart';
 void main() {
   // in order to prevent the error occuring on calling multipler providers in the same context
   // Provider.debugCheckInvalidValueType = null;
-  Admob.initialize(AdmobHelper.admobTestAppId);
+  // Admob.initialize(AdmobHelper.admobTestAppId);
   runApp(MyApp());
 }
 
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
         child: Consumer<DarkThemeProvider>(
           builder: (BuildContext context, value, Widget child) {
             return MaterialApp(
-              title: 'AylikGelirGider',
+              title: 'Budgee',
               debugShowCheckedModeBanner: false,
               theme: Styles.themeData(themeChangeProvider.isDarkTheme, context),
               home: BottomNavigation(),

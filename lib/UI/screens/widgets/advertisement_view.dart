@@ -8,13 +8,14 @@ class BannerAdvertisementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AdvertisementPlaceHolder();
+    return _getAdWidget();
   }
 
-  Widget _getAddWidget(){
+  Widget _getAdWidget() {
+    Admob.initialize(AdmobHelper.admobAppId);
     return Container(
         child: AdmobBanner(
-      adUnitId: AdmobHelper.admobTestBannerAdId,
+      adUnitId: AdmobHelper.admobBannerAdId,
       adSize: AdmobBannerSize.FULL_BANNER,
       listener: (AdmobAdEvent event, Map<String, dynamic> args) {
         handleEvent(event, args, 'Banner');

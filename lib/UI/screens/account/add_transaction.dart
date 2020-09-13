@@ -91,7 +91,7 @@ class _AddTransactionState extends State<AddTransaction> {
                       ),
                       _padding,
                       TextFormField(
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText1,
                         autofocus: true,
                         controller: _amountController,
                         keyboardType: TextInputType.numberWithOptions(
@@ -111,7 +111,7 @@ class _AddTransactionState extends State<AddTransaction> {
                       ),
                       _padding,
                       TextFormField(
-                        style: Theme.of(context).textTheme.body1,
+                        style: Theme.of(context).textTheme.bodyText1,
                         controller: _noteController,
                         maxLines: 2,
                         maxLength: 64,

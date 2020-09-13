@@ -32,10 +32,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 child: Center(
                   child: BannerAdvertisementView(),
                 )),
-            Expanded(
-                flex: 4,
-                child: Container(
-                    child: CurrentMonth())),
+            Expanded(flex: 4, child: Container(child: CurrentMonth())),
             Expanded(
               flex: 7,
               child: MonthlyTotalStats(),
@@ -141,7 +138,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
                         ),
                         AutoSizeText(
                           getOnlyDateString(transactionInfo.transactionDate),
-                          style: Theme.of(context).textTheme.body2.apply(),
+                          style: Theme.of(context).textTheme.bodyText2.apply(),
                         ),
                       ],
                     ),
@@ -157,7 +154,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
                                         transactionInfo.transactionAmount),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .body1
+                                    .bodyText1
                                     .apply(color: Colors.red.withAlpha(190)))
                             : Text(
                                 DoubleHelper.convertDobleTo2DecimalPlaces(
@@ -165,7 +162,7 @@ class TransactionInfoDtoTile extends StatelessWidget {
                                 ),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .body1
+                                    .bodyText1
                                     .apply(color: Colors.green.withAlpha(190))),
                       ],
                     ),
@@ -221,14 +218,15 @@ class TransactionInfoDtoTile extends StatelessWidget {
               if (transactionInfo.transactionNote != null &&
                   transactionInfo.transactionNote != '')
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 16.0),
+                  padding:
+                      const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 16.0),
                   child: Text(
                     transactionInfo.transactionNote,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: Theme.of(context)
                         .textTheme
-                        .body2
+                        .bodyText2
                         .apply(fontSizeFactor: 1.1, color: Colors.grey[600]),
                   ),
                 ),

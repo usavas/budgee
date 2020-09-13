@@ -1,4 +1,5 @@
 import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/widgets/advertisement_placeholder.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:flutter/material.dart';
 
@@ -14,22 +15,16 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  // AdmobBannerSize bannerAdSize;
-
   @override
   void initState() {
     super.initState();
-    // bannerAdSize = AdmobBannerSize.SMART_BANNER;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: <Widget>[
-        Expanded(
-          flex: 5,
-            child: BannerAdvertisementView()
-        ),
+        Expanded(flex: 5, child: BannerAdvertisementView()),
         Expanded(
           flex: 4,
           child: CurrentMonth(),
@@ -172,7 +167,7 @@ class TransactionTypeWidget extends StatelessWidget {
                       transactionType.transactionTypeName,
                       style: Theme.of(context)
                           .textTheme
-                          .body2
+                          .bodyText2
                           .copyWith(fontSize: _fontSize, color: _color),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
