@@ -24,26 +24,22 @@ class _TransactionHistoryState extends State<TransactionHistory> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Theme.of(context).backgroundColor,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-                flex: 5,
-                child: Center(
-                  child: BannerAdvertisementView(),
-                )),
-            Expanded(flex: 4, child: Container(child: CurrentMonth())),
-            Expanded(
-              flex: 7,
-              child: MonthlyTotalStats(),
-            ),
-            Expanded(
-                flex: 20,
-                child: ChangeNotifierProvider(
-                    create: (context) => TransactionHistoryProvider(),
-                    child: TransactionInfoDtoList())),
-          ],
-        ));
+      color: Theme.of(context).backgroundColor,
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: BannerAdvertisementView(),
+          ),
+          Container(child: CurrentMonth()),
+          Container(child: MonthlyTotalStats()),
+          Expanded(
+            child: ChangeNotifierProvider(
+                create: (context) => TransactionHistoryProvider(),
+                child: TransactionInfoDtoList()),
+          ),
+        ],
+      ),
+    );
   }
 }
 

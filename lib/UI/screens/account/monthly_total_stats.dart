@@ -84,6 +84,7 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                           (snapshot.data[0].amount - snapshot.data[1].amount)
                               .toStringAsFixed(2),
                           Colors.blue),
+                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
                     ],
                   );
                 } else {

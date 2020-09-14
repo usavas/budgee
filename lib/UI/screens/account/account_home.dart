@@ -23,29 +23,15 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: <Widget>[
-        Expanded(flex: 5, child: BannerAdvertisementView()),
-        Expanded(
-          flex: 4,
-          child: CurrentMonth(),
-        ),
-        Expanded(
-          flex: 7,
-          child: MonthlyTotalStats(),
-        ),
-        Expanded(
-          flex: 20,
-          child: Container(
-            child: PageView(
-              controller: PageController(initialPage: 0),
-              children: <Widget>[
-                TransactionTypesPage(p.expenseTypes),
-                TransactionTypesPage(p.incomeTypes)
-              ],
-            ),
-          ),
-        )
-      ]),
+      body: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          Container(child: BannerAdvertisementView()),
+          Container(child: CurrentMonth()),
+          Container(child: MonthlyTotalStats()),
+          TransactionTypesPage(p.expenseTypes, false),
+          TransactionTypesPage(p.incomeTypes, true)
+        ]),
+      ),
     );
   }
 }
@@ -54,7 +40,8 @@ class _AccountState extends State<Account> {
 //todo evaluate retrieving them from database
 class TransactionTypesPage extends StatelessWidget {
   final List<TransactionType> transactionTypes;
-  TransactionTypesPage(this.transactionTypes);
+  final bool isIncome;
+  TransactionTypesPage(this.transactionTypes, this.isIncome);
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +63,29 @@ class TransactionTypesPage extends StatelessWidget {
             top: _size.width * 0.01,
             bottom: _size.width * 0.01),
         child: Card(
-          child: Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Wrap(
-                direction: Axis.horizontal,
-                spacing: _spacingBtwTransactionTypesX,
-                runSpacing: _spacingBtwTransactionTypesY,
-                children: <Widget>[
-                  ...transactionTypesWidgets,
-                ],
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 12, bottom: 16),
+                child: (isIncome)
+                    ? Text('Income Transactions')
+                    : Text('Expense Transactions'),
               ),
-            ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    spacing: _spacingBtwTransactionTypesX,
+                    runSpacing: _spacingBtwTransactionTypesY,
+                    children: <Widget>[
+                      ...transactionTypesWidgets,
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ));
   }
