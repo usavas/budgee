@@ -1,9 +1,13 @@
 import 'dart:developer';
 import 'package:expenses/UI/helper/date_formatter.dart';
+import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
 import 'package:expenses/dao/transaction_info_dao.dart';
 import 'package:expenses/models/transaction_info.dart';
 import 'package:expenses/models/transaction_type.dart';
+import 'package:expenses/repositories/transaction_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction(this.transactionType, {Key key}) : super(key: key);
@@ -59,6 +63,9 @@ class _AddTransactionState extends State<AddTransaction> {
     final Padding _padding = Padding(
       padding: EdgeInsets.only(top: 0),
     );
+
+    MonthlyTotalsProvider _monthlyTotalProvider =
+        Provider.of<MonthlyTotalsProvider>(context);
 
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -140,7 +147,7 @@ class _AddTransactionState extends State<AddTransaction> {
                             child: RaisedButton(
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
-                                  TransactionDao()
+                                  TransactionRepository()
                                       .insertTransaction(TransactionInfo(
                                     transactionNote: _noteController.text,
                                     transactionAmount:
@@ -151,6 +158,9 @@ class _AddTransactionState extends State<AddTransaction> {
                                   ))
                                       .then((insertedId) {
                                     log("inserted: " + insertedId.toString());
+                                    //todo update the monthlytotals
+                                    _monthlyTotalProvider
+                                        .notifyListernersCustom();
                                   });
                                   // to dismiss the keyboard
                                   FocusScope.of(context).unfocus();

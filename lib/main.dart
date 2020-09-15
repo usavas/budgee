@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'UI/helper/admob_helper.dart';
+import 'UI/screens/account/providers/mothly_totals_provider.dart';
 import 'UI/themes/dark_theme_styles.dart';
 import 'UI/themes/darktheme_provider.dart';
 import 'UI/screens/bottomnavigation.dart';
@@ -12,7 +13,10 @@ void main() {
   // in order to prevent the error occuring on calling multipler providers in the same context
   // Provider.debugCheckInvalidValueType = null;
   // Admob.initialize(AdmobHelper.admobTestAppId);
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<MonthlyTotalsProvider>(
+        create: (_) => MonthlyTotalsProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {

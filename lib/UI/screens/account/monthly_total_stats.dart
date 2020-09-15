@@ -1,4 +1,5 @@
 import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
 import 'package:expenses/models/monthly_total.dart';
 import 'package:expenses/repositories/monthly_totals_repository.dart';
 import 'package:flutter/material.dart';
@@ -44,57 +45,61 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
               right: _paddingAroundLeftRight,
               top: _paddingAboveContent),
           alignment: Alignment.centerLeft,
-          child: FutureBuilder<List<MonthlyTotalAmount>>(
-              future: Future.wait([
-                MonthlyTotalAmountsRepository()
-                    .getMonthlyIncomeTransactionTotal(
-                        monthYearProvider.currentYear,
-                        monthYearProvider.currentMonth),
-                MonthlyTotalAmountsRepository()
-                    .getMonthlyExpenseTransactionTotal(
-                        monthYearProvider.currentYear,
-                        monthYearProvider.currentMonth),
-              ]),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    // this returns an empty list from respected dao, check if the list empty, and only then show this text
-                    print(snapshot.error);
+          child:
+              Consumer<MonthlyTotalsProvider>(builder: (context, provider, _) {
+            return FutureBuilder<List<MonthlyTotalAmount>>(
+                future: Future.wait([
+                  provider.getMonthlyIncomeTotals(monthYearProvider.currentYear,
+                      monthYearProvider.currentMonth),
+                  provider.getMonthlyExpenseTotals(
+                      monthYearProvider.currentYear,
+                      monthYearProvider.currentMonth),
+                ]),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      // this returns an empty list from respected dao, check if the list empty, and only then show this text
+                      print(snapshot.error);
+                      return Center(
+                          child: Text(
+                              'Add transactions to see the monthly statistics'));
+                    }
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Income:',
+                            snapshot.data[0].amount.toStringAsFixed(2),
+                            Colors.green),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Expense:',
+                            snapshot.data[1].amount.toStringAsFixed(2),
+                            Colors.red),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                        AccountBalanceInfoRow(
+                            'Saved:',
+                            (snapshot.data[0].amount - snapshot.data[1].amount)
+                                .toStringAsFixed(2),
+                            Colors.blue),
+                        Padding(
+                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
+                      ],
+                    );
+                  } else {
                     return Center(
-                        child: Text(
-                            'Add transactions to see the monthly statistics'));
+
+                        // child: Text('Fetching statistics'),
+
+                        );
                   }
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                      AccountBalanceInfoRow(
-                          'Income:',
-                          snapshot.data[0].amount.toStringAsFixed(2),
-                          Colors.green),
-                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                      AccountBalanceInfoRow(
-                          'Expense:',
-                          snapshot.data[1].amount.toStringAsFixed(2),
-                          Colors.red),
-                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                      AccountBalanceInfoRow(
-                          'Saved:',
-                          (snapshot.data[0].amount - snapshot.data[1].amount)
-                              .toStringAsFixed(2),
-                          Colors.blue),
-                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                    ],
-                  );
-                } else {
-                  return Center(
-
-                      // child: Text('Fetching statistics'),
-
-                      );
-                }
-              }),
+                });
+          }),
         )),
       ),
     );

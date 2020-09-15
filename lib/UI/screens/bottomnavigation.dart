@@ -1,3 +1,6 @@
+import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'settings/settings.dart';
 import 'transactionhistory/transaction_history.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +28,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-              child: Center(
+        child: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
       ),
