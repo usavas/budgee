@@ -79,7 +79,9 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
       List<MonthlyTransactionTypesTotal> transactionTypesTotals) {
     Map<String, double> maps = Map<String, double>();
     for (var t in transactionTypesTotals) {
-      maps.putIfAbsent(t.transactionTypeName, () => t.totalAmount);
+      maps.putIfAbsent(
+          t.transactionTypeName + " - " + t.totalAmount.toStringAsFixed(2),
+          () => t.totalAmount);
     }
     return maps;
   }
