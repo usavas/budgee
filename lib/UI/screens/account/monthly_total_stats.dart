@@ -1,7 +1,6 @@
 import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
 import 'package:expenses/models/monthly_total.dart';
-import 'package:expenses/repositories/monthly_totals_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -55,49 +54,45 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                       monthYearProvider.currentYear,
                       monthYearProvider.currentMonth),
                 ]),
+                initialData: [
+                  MonthlyTotalAmount(amount: 0),
+                  MonthlyTotalAmount(amount: 0),
+                ],
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      // this returns an empty list from respected dao, check if the list empty, and only then show this text
-                      print(snapshot.error);
-                      return Center(
-                          child: Text(
-                              'Add transactions to see the monthly statistics'));
-                    }
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                        AccountBalanceInfoRow(
-                            'Income:',
-                            snapshot.data[0].amount.toStringAsFixed(2),
-                            Colors.green),
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                        AccountBalanceInfoRow(
-                            'Expense:',
-                            snapshot.data[1].amount.toStringAsFixed(2),
-                            Colors.red),
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                        AccountBalanceInfoRow(
-                            'Saved:',
-                            (snapshot.data[0].amount - snapshot.data[1].amount)
-                                .toStringAsFixed(2),
-                            Colors.blue),
-                        Padding(
-                            padding: EdgeInsets.only(top: _paddingBtwTexts)),
-                      ],
-                    );
-                  } else {
+                  final Padding _padding =
+                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts));
+
+                  // if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
                     return Center(
-
-                        // child: Text('Fetching statistics'),
-
-                        );
+                        child: Text(
+                            'Add transactions to see the monthly statistics'));
                   }
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _padding,
+                      AccountBalanceInfoRow(
+                          'Income:',
+                          snapshot.data[0].amount.toStringAsFixed(2),
+                          Colors.green),
+                      _padding,
+                      AccountBalanceInfoRow(
+                          'Expense:',
+                          snapshot.data[1].amount.toStringAsFixed(2),
+                          Colors.red),
+                      _padding,
+                      AccountBalanceInfoRow(
+                          'Saved:',
+                          (snapshot.data[0].amount - snapshot.data[1].amount)
+                              .toStringAsFixed(2),
+                          Colors.blue),
+                      _padding,
+                    ],
+                  );
                 });
           }),
         )),

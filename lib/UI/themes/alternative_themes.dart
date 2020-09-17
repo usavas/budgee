@@ -35,6 +35,19 @@ class Styles {
             fontFamily: _fontFamily,
             fontWeight: FontWeight.w600,
             fontSize: 16,
+            color: isDarkTheme ? Colors.white70 : Colors.black87,
+          ),
+          headline5: TextStyle(
+            fontFamily: _fontFamily,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+            color: isDarkTheme ? Colors.white70 : Colors.black87,
+          ),
+          headline6: TextStyle(
+            fontFamily: _fontFamily,
+            fontWeight: FontWeight.w300,
+            fontSize: 14,
+            color: isDarkTheme ? Colors.white70 : Colors.black87,
           ),
           // this color is used for the weekdays on datepicker widget
           caption: TextStyle(

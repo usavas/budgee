@@ -30,8 +30,11 @@ class CurrentMonth extends StatelessWidget {
                   monthProvider.decreaseMonth();
                 },
               ),
-              Text(getCurrMonthYear(DateTime(
-                  monthProvider.currentYear, monthProvider.currentMonth))),
+              Text(
+                getCurrMonthYear(DateTime(
+                    monthProvider.currentYear, monthProvider.currentMonth)),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
               IconButton(
                 icon: Icon(Icons.arrow_forward),
                 color: Theme.of(context).textTheme.bodyText1.color,

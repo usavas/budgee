@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'package:expenses/UI/helper/date_formatter.dart';
-import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
-import 'package:expenses/dao/transaction_info_dao.dart';
 import 'package:expenses/models/transaction_info.dart';
 import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/transaction_repository.dart';
@@ -61,7 +59,7 @@ class _AddTransactionState extends State<AddTransaction> {
   @override
   Widget build(BuildContext context) {
     final Padding _padding = Padding(
-      padding: EdgeInsets.only(top: 0),
+      padding: EdgeInsets.only(top: 12),
     );
 
     MonthlyTotalsProvider _monthlyTotalProvider =
@@ -86,6 +84,7 @@ class _AddTransactionState extends State<AddTransaction> {
                             child: Text(
                               getOnlyDateString(selectedDate).toString(),
                               textAlign: TextAlign.start,
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ),
                           Expanded(
@@ -105,7 +104,8 @@ class _AddTransactionState extends State<AddTransaction> {
                             signed: false, decimal: true),
                         maxLength: 10,
                         decoration: const InputDecoration(
-                          labelText: 'Enter an amount',
+                          hintText: 'Enter an amount',
+                          // labelText: 'Enter an amount',
                         ),
                         validator: (value) {
                           if (value.trim().isEmpty) {
@@ -123,7 +123,8 @@ class _AddTransactionState extends State<AddTransaction> {
                         maxLines: 2,
                         maxLength: 64,
                         decoration: const InputDecoration(
-                          labelText: 'Notes (Optional)',
+                          hintText: 'Notes (Optional)',
+                          // labelText: 'Notes (Optional)',
                         ),
                       ),
                       Padding(

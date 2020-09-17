@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'UI/helper/admob_helper.dart';
 import 'UI/screens/account/providers/mothly_totals_provider.dart';
-import 'UI/themes/dark_theme_styles.dart';
+import 'UI/themes/alternative_themes.dart';
 import 'UI/themes/darktheme_provider.dart';
 import 'UI/screens/bottomnavigation.dart';
 

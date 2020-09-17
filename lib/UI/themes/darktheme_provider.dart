@@ -1,4 +1,4 @@
-import 'shared_freferences.dart';
+import 'dark_theme_preference.dart';
 import 'package:flutter/material.dart';
 
 class DarkThemeProvider with ChangeNotifier {

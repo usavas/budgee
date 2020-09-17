@@ -79,12 +79,27 @@ class TransactionInfoDtoList extends StatelessWidget {
             ),
           );
         } else {
-          print('Fetching the data...');
-          return Scaffold(
-            body: Center(
-              child: Text('Fetching the data'),
-            ),
-          );
+          return ListView.separated(
+              itemBuilder: (context, count) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 2,
+                    child: Container(
+                      height: 60,
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (_, count) {
+                return Padding(
+                  padding: EdgeInsets.only(top: 0),
+                );
+              },
+              itemCount: 6);
         }
       },
     );
@@ -99,14 +114,14 @@ class TransactionInfoDtoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     CurrentMonthYearProvider monthProvider =
         Provider.of<CurrentMonthYearProvider>(context, listen: false);
-    var provider =
+    TransactionHistoryProvider provider =
         Provider.of<TransactionHistoryProvider>(context, listen: false);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 2,
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -129,12 +144,18 @@ class TransactionInfoDtoTile extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(4.0),
                             ),
-                            Text(transactionInfo.transactionType),
+                            Text(
+                              transactionInfo.transactionType,
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
                           ],
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 4),
+                        ),
                         AutoSizeText(
-                          getOnlyDateString(transactionInfo.transactionDate),
-                          style: Theme.of(context).textTheme.bodyText2.apply(),
+                          getDateAndTimeString(transactionInfo.transactionDate),
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ],
                     ),
