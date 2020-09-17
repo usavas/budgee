@@ -70,28 +70,31 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
                             'Add transactions to see the monthly statistics'));
                   }
 
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _padding,
-                      AccountBalanceInfoRow(
-                          'Income:',
-                          snapshot.data[0].amount.toStringAsFixed(2),
-                          Colors.green),
-                      _padding,
-                      AccountBalanceInfoRow(
-                          'Expense:',
-                          snapshot.data[1].amount.toStringAsFixed(2),
-                          Colors.red),
-                      _padding,
-                      AccountBalanceInfoRow(
-                          'Saved:',
-                          (snapshot.data[0].amount - snapshot.data[1].amount)
-                              .toStringAsFixed(2),
-                          Colors.blue),
-                      _padding,
-                    ],
+                  return Container(
+                    padding: EdgeInsets.only(top: 4, bottom: 4),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _padding,
+                        AccountBalanceInfoRow(
+                            'Income:',
+                            snapshot.data[0].amount.toStringAsFixed(2),
+                            Colors.green),
+                        _padding,
+                        AccountBalanceInfoRow(
+                            'Expense:',
+                            snapshot.data[1].amount.toStringAsFixed(2),
+                            Colors.red),
+                        _padding,
+                        AccountBalanceInfoRow(
+                            'Saved:',
+                            (snapshot.data[0].amount - snapshot.data[1].amount)
+                                .toStringAsFixed(2),
+                            Colors.blue),
+                        _padding,
+                      ],
+                    ),
                   );
                 });
           }),

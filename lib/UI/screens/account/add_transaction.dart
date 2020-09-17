@@ -35,8 +35,6 @@ class _AddTransactionState extends State<AddTransaction> {
           data: Theme.of(context).copyWith(
             accentColor: const Color(0xFF4A5BF6), //selection color
             textTheme: Theme.of(context).textTheme,
-            dialogBackgroundColor:
-                Theme.of(context).backgroundColor, //Background color
           ),
           child: child,
         );
