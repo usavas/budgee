@@ -1,15 +1,12 @@
 import 'package:expenses/UI/screens/account/current_month.dart';
-import 'package:expenses/UI/screens/widgets/advertisement_placeholder.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
     as p;
-import 'package:provider/provider.dart';
 import 'add_transaction.dart';
 import 'monthly_total_stats.dart';
-import 'providers/mothly_totals_provider.dart';
 
 class Account extends StatefulWidget {
   @override
