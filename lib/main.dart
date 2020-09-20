@@ -1,10 +1,8 @@
-import 'package:admob_flutter/admob_flutter.dart';
-import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'UI/helper/admob_helper.dart';
-import 'UI/screens/account/providers/mothly_totals_provider.dart';
+import 'UI/screens/providers/mothly_totals_provider.dart';
 import 'UI/themes/alternative_themes.dart';
 import 'UI/themes/darktheme_provider.dart';
 import 'UI/screens/bottomnavigation.dart';

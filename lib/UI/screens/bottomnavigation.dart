@@ -1,6 +1,6 @@
-import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:expenses/UI/screens/widgets/monthly_total_stats.dart';
 
+import 'statistics/monthly_transaction_type_totals.dart';
 import 'settings/settings.dart';
 import 'transactionhistory/transaction_history.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   static List<Widget> _widgetOptions = <Widget>[
     Account(),
     TransactionHistory(),
+    MonthlyTotalStatsDetailed(),
     Settings(),
   ];
 
@@ -35,6 +36,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet),
@@ -45,8 +47,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
             title: Text('History'),
           ),
           BottomNavigationBarItem(
+              icon: Icon(Icons.assessment), title: Text('Statistics')),
+          BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            title: Text('Ayarlar'),
+            title: Text('Settings'),
           ),
         ],
         currentIndex: _selectedIndex,

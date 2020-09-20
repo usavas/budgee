@@ -1,12 +1,11 @@
-import 'package:expenses/UI/screens/account/current_month.dart';
+import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/statistics/charts/expense_chart_pie.dart';
+import 'package:expenses/UI/screens/widgets/current_month.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:expenses/models/monthly_transaction_types_totals.dart';
 import 'package:expenses/repositories/monthly_transaction_types_totals_repository.dart';
 import 'package:provider/provider.dart';
-import 'charts/expense_chart_pie.dart';
 import 'package:flutter/material.dart';
-
-import 'providers/current_month_year_provider.dart';
 
 class MonthlyTotalStatsDetailed extends StatelessWidget {
   const MonthlyTotalStatsDetailed({Key key}) : super(key: key);

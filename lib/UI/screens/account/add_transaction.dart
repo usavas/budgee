@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:expenses/UI/helper/date_formatter.dart';
-import 'package:expenses/UI/screens/account/providers/mothly_totals_provider.dart';
+import 'package:expenses/UI/screens/providers/mothly_totals_provider.dart';
 import 'package:expenses/models/transaction_info.dart';
 import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/transaction_repository.dart';
