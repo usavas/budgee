@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expenses/UI/helper/date_formatter.dart';
-import 'package:expenses/UI/screens/account/current_month.dart';
-import 'package:expenses/UI/screens/account/monthly_total_stats.dart';
-import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/widgets/current_month.dart';
+import 'package:expenses/UI/screens/statistics/monthly_total_stats.dart';
+import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:provider/provider.dart';

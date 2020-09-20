@@ -1,13 +1,10 @@
 import 'package:expenses/UI/helper/date_formatter.dart';
-import 'package:expenses/UI/screens/account/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CurrentMonth extends StatelessWidget {
   const CurrentMonth({Key key}) : super(key: key);
-
-  // final double paddingWidth;
-  // final double paddingHeight;
 
   @override
   Widget build(BuildContext context) {
