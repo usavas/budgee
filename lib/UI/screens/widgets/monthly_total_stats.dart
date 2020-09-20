@@ -1,5 +1,6 @@
 import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/providers/mothly_totals_provider.dart';
+import 'package:expenses/UI/screens/providers/page_index_provider.dart';
 import 'package:expenses/models/monthly_total.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,78 +29,81 @@ class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
     CurrentMonthYearProvider monthYearProvider =
         Provider.of<CurrentMonthYearProvider>(context);
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MonthlyTotalStatsDetailed()));
+    return Consumer<PageIndexProvider>(
+      builder: (context, provider, child) {
+        return GestureDetector(
+          onTap: () {
+            provider.setSelectedIndex(2);
+          },
+          child: Container(
+            padding: EdgeInsets.only(left: _paddingWidth, right: _paddingWidth),
+            child: Card(
+                child: Container(
+              padding: EdgeInsets.only(
+                  left: _paddingAroundLeftRight,
+                  right: _paddingAroundLeftRight,
+                  top: _paddingAboveContent),
+              alignment: Alignment.centerLeft,
+              child: Consumer<MonthlyTotalsProvider>(
+                  builder: (context, provider, _) {
+                return FutureBuilder<List<MonthlyTotalAmount>>(
+                    future: Future.wait([
+                      provider.getMonthlyIncomeTotals(
+                          monthYearProvider.currentYear,
+                          monthYearProvider.currentMonth),
+                      provider.getMonthlyExpenseTotals(
+                          monthYearProvider.currentYear,
+                          monthYearProvider.currentMonth),
+                    ]),
+                    initialData: [
+                      MonthlyTotalAmount(amount: 0),
+                      MonthlyTotalAmount(amount: 0),
+                    ],
+                    builder: (context, snapshot) {
+                      final Padding _padding = Padding(
+                          padding: EdgeInsets.only(top: _paddingBtwTexts));
+
+                      // if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                        return Center(
+                            child: Text(
+                                'Add transactions to see the monthly statistics'));
+                      }
+
+                      return Container(
+                        padding: EdgeInsets.only(top: 4, bottom: 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _padding,
+                            AccountBalanceInfoRow(
+                                'Income:',
+                                snapshot.data[0].amount.toStringAsFixed(2),
+                                Colors.green),
+                            _padding,
+                            AccountBalanceInfoRow(
+                                'Expense:',
+                                snapshot.data[1].amount.toStringAsFixed(2),
+                                Colors.red),
+                            _padding,
+                            AccountBalanceInfoRow(
+                                'Saved:',
+                                (snapshot.data[0].amount -
+                                        snapshot.data[1].amount)
+                                    .toStringAsFixed(2),
+                                Colors.blue),
+                            _padding,
+                          ],
+                        ),
+                      );
+                    });
+              }),
+            )),
+          ),
+        );
       },
-      child: Container(
-        padding: EdgeInsets.only(left: _paddingWidth, right: _paddingWidth),
-        child: Card(
-            child: Container(
-          padding: EdgeInsets.only(
-              left: _paddingAroundLeftRight,
-              right: _paddingAroundLeftRight,
-              top: _paddingAboveContent),
-          alignment: Alignment.centerLeft,
-          child:
-              Consumer<MonthlyTotalsProvider>(builder: (context, provider, _) {
-            return FutureBuilder<List<MonthlyTotalAmount>>(
-                future: Future.wait([
-                  provider.getMonthlyIncomeTotals(monthYearProvider.currentYear,
-                      monthYearProvider.currentMonth),
-                  provider.getMonthlyExpenseTotals(
-                      monthYearProvider.currentYear,
-                      monthYearProvider.currentMonth),
-                ]),
-                initialData: [
-                  MonthlyTotalAmount(amount: 0),
-                  MonthlyTotalAmount(amount: 0),
-                ],
-                builder: (context, snapshot) {
-                  final Padding _padding =
-                      Padding(padding: EdgeInsets.only(top: _paddingBtwTexts));
-
-                  // if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    print(snapshot.error);
-                    return Center(
-                        child: Text(
-                            'Add transactions to see the monthly statistics'));
-                  }
-
-                  return Container(
-                    padding: EdgeInsets.only(top: 4, bottom: 4),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        _padding,
-                        AccountBalanceInfoRow(
-                            'Income:',
-                            snapshot.data[0].amount.toStringAsFixed(2),
-                            Colors.green),
-                        _padding,
-                        AccountBalanceInfoRow(
-                            'Expense:',
-                            snapshot.data[1].amount.toStringAsFixed(2),
-                            Colors.red),
-                        _padding,
-                        AccountBalanceInfoRow(
-                            'Saved:',
-                            (snapshot.data[0].amount - snapshot.data[1].amount)
-                                .toStringAsFixed(2),
-                            Colors.blue),
-                        _padding,
-                      ],
-                    ),
-                  );
-                });
-          }),
-        )),
-      ),
     );
   }
 }
