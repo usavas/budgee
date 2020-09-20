@@ -5,8 +5,6 @@ import 'package:expenses/models/monthly_total.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../statistics/monthly_transaction_type_totals.dart';
-
 class MonthlyTotalStats extends StatefulWidget {
   MonthlyTotalStats({Key key}) : super(key: key);
 

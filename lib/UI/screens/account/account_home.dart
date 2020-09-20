@@ -6,7 +6,11 @@ import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
     as p;
 import 'add_transaction.dart';
+<<<<<<< HEAD
 import '../widgets/monthly_total_stats.dart';
+=======
+import '../statistics/monthly_total_stats.dart';
+>>>>>>> 3c69c3fdd20c61741e389c5d68463bea6bd8767c
 
 class Account extends StatefulWidget {
   @override

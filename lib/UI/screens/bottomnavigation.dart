@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import 'package:expenses/UI/screens/providers/page_index_provider.dart';
 import 'package:provider/provider.dart';
+=======
+import 'package:expenses/UI/screens/statistics/monthly_total_stats.dart';
+>>>>>>> 3c69c3fdd20c61741e389c5d68463bea6bd8767c
 
 import 'statistics/monthly_transaction_type_totals.dart';
 import 'settings/settings.dart';
@@ -26,6 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return ChangeNotifierProvider<PageIndexProvider>(
         create: (context) => PageIndexProvider(),
         child: Consumer<PageIndexProvider>(
@@ -64,5 +69,47 @@ class _BottomNavigationState extends State<BottomNavigation> {
             ),
           );
         }));
+=======
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet),
+            title: Text('Income/Expense'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.all_inclusive),
+            title: Text('History'),
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.assessment), title: Text('Statistics')),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text('Settings'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        unselectedItemColor: Colors.grey[500],
+        iconSize: 30,
+        elevation: 20,
+        backgroundColor: Theme.of(context).backgroundColor,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+>>>>>>> 3c69c3fdd20c61741e389c5d68463bea6bd8767c
   }
 }
