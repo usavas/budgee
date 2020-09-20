@@ -1,16 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expenses/UI/helper/date_formatter.dart';
 import 'package:expenses/UI/screens/widgets/current_month.dart';
-<<<<<<< HEAD
 import 'package:expenses/UI/screens/widgets/monthly_total_stats.dart';
-=======
-import 'package:expenses/UI/screens/statistics/monthly_total_stats.dart';
->>>>>>> 3c69c3fdd20c61741e389c5d68463bea6bd8767c
 import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:provider/provider.dart';
-
 import '../../../models/transaction_info_dto.dart';
 import '../../../models/helpers/double_helper.dart';
 import 'package:expenses/models/transaction_info.dart';
