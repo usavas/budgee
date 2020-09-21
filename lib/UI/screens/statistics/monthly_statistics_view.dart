@@ -1,16 +1,15 @@
 import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/statistics/charts/expense_chart_pie.dart';
-import 'package:expenses/UI/screens/widgets/current_month.dart';
+import 'package:expenses/UI/screens/widgets/current_month_view.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:expenses/models/monthly_transaction_types_totals.dart';
 import 'package:expenses/repositories/monthly_transaction_types_totals_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-class MonthlyTotalStatsDetailed extends StatelessWidget {
-  const MonthlyTotalStatsDetailed({Key key}) : super(key: key);
+class MonthlyStatisticsView extends StatelessWidget {
+  const MonthlyStatisticsView({Key key}) : super(key: key);
 
-//todo show monthly totals of transactions categorized under each transaction type
   @override
   Widget build(BuildContext context) {
     final double edgeinsets = MediaQuery.of(context).size.width * 0.2;
@@ -25,7 +24,7 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(16),
                   ),
-                  CurrentMonth(),
+                  CurrentMonthView(),
                   Padding(
                     padding: EdgeInsets.all(16),
                   ),
@@ -65,7 +64,7 @@ class MonthlyTotalStatsDetailed extends StatelessWidget {
                                   : Text('No transaction info for this month');
                             } else {
                               return Center(
-                                child: Text('There is no data for this month'),
+                                child: Text('Fetching...'),
                               );
                             }
                           });

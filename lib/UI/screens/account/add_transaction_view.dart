@@ -7,16 +7,16 @@ import 'package:expenses/repositories/transaction_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddTransaction extends StatefulWidget {
-  const AddTransaction(this.transactionType, {Key key}) : super(key: key);
+class AddTransactionView extends StatefulWidget {
+  const AddTransactionView(this.transactionType, {Key key}) : super(key: key);
 
   final TransactionType transactionType;
 
   @override
-  _AddTransactionState createState() => _AddTransactionState();
+  _AddTransactionViewState createState() => _AddTransactionViewState();
 }
 
-class _AddTransactionState extends State<AddTransaction> {
+class _AddTransactionViewState extends State<AddTransactionView> {
   final _formKey = GlobalKey<FormState>();
 
   final _amountController = TextEditingController();

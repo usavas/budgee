@@ -1,6 +1,5 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:expenses/UI/helper/admob_helper.dart';
-import 'package:expenses/UI/screens/widgets/advertisement_placeholder.dart';
 import 'package:flutter/material.dart';
 
 class BannerAdvertisementView extends StatelessWidget {

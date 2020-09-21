@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expenses/UI/helper/date_formatter.dart';
-import 'package:expenses/UI/screens/widgets/current_month.dart';
-import 'package:expenses/UI/screens/widgets/monthly_total_stats.dart';
+import 'package:expenses/UI/screens/widgets/current_month_view.dart';
+import 'package:expenses/UI/screens/widgets/monthly_summary_view.dart';
 import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:expenses/UI/screens/transactionhistory/providers/transaction_history_provider.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
@@ -12,14 +12,14 @@ import 'package:expenses/models/transaction_info.dart';
 import 'package:expenses/repositories/transaction_repository.dart';
 import 'package:flutter/material.dart';
 
-class TransactionHistory extends StatefulWidget {
-  TransactionHistory({Key key}) : super(key: key);
+class TransactionHistoryView extends StatefulWidget {
+  TransactionHistoryView({Key key}) : super(key: key);
 
   @override
-  _TransactionHistoryState createState() => _TransactionHistoryState();
+  _TransactionHistoryViewState createState() => _TransactionHistoryViewState();
 }
 
-class _TransactionHistoryState extends State<TransactionHistory> {
+class _TransactionHistoryViewState extends State<TransactionHistoryView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,8 +29,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
           Container(
             child: BannerAdvertisementView(),
           ),
-          Container(child: CurrentMonth()),
-          Container(child: MonthlyTotalStats()),
+          Container(child: CurrentMonthView()),
+          Container(child: MonhtlySummaryView()),
           Expanded(
             child: ChangeNotifierProvider(
                 create: (context) => TransactionHistoryProvider(),

@@ -1,19 +1,19 @@
-import 'package:expenses/UI/screens/widgets/current_month.dart';
+import 'package:expenses/UI/screens/widgets/current_month_view.dart';
 import 'package:expenses/UI/screens/widgets/advertisement_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:expenses/models/transaction_type.dart';
 import 'package:expenses/repositories/predefined_transaction_types_and_cats.dart'
     as p;
-import 'add_transaction.dart';
-import '../widgets/monthly_total_stats.dart';
+import 'add_transaction_view.dart';
+import '../widgets/monthly_summary_view.dart';
 
-class Account extends StatefulWidget {
+class AccountHomeView extends StatefulWidget {
   @override
-  _AccountState createState() => _AccountState();
+  _AccountHomeViewState createState() => _AccountHomeViewState();
 }
 
-class _AccountState extends State<Account> {
+class _AccountHomeViewState extends State<AccountHomeView> {
   @override
   void initState() {
     super.initState();
@@ -25,8 +25,8 @@ class _AccountState extends State<Account> {
       body: SingleChildScrollView(
         child: Column(children: <Widget>[
           Container(child: BannerAdvertisementView()),
-          Container(child: CurrentMonth()),
-          Container(child: MonthlyTotalStats()),
+          Container(child: CurrentMonthView()),
+          Container(child: MonhtlySummaryView()),
           TransactionTypesPage(p.expenseTypes, false),
           TransactionTypesPage(p.incomeTypes, true)
         ]),
@@ -142,7 +142,8 @@ class TransactionTypeWidget extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => AddTransaction(transactionType)));
+                      builder: (context) =>
+                          AddTransactionView(transactionType)));
             },
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

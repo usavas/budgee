@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AdvertisementPlaceHolder extends StatelessWidget {
-  const AdvertisementPlaceHolder({Key key}) : super(key: key);
+class AdvertisementPlaceHolderView extends StatelessWidget {
+  const AdvertisementPlaceHolderView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

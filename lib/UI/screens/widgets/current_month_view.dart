@@ -3,8 +3,8 @@ import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CurrentMonth extends StatelessWidget {
-  const CurrentMonth({Key key}) : super(key: key);
+class CurrentMonthView extends StatelessWidget {
+  const CurrentMonthView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

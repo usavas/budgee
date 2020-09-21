@@ -1,26 +1,26 @@
 import 'package:expenses/UI/screens/providers/page_index_provider.dart';
 import 'package:provider/provider.dart';
-import 'statistics/monthly_transaction_type_totals.dart';
-import 'settings/settings.dart';
-import 'transactionhistory/transaction_history.dart';
+import 'statistics/monthly_statistics_view.dart';
+import 'settings/settings_view.dart';
+import 'transactionhistory/transaction_history_view.dart';
 import 'package:flutter/material.dart';
-import 'account/account_home.dart';
+import 'account/account_home_view.dart';
 
-class BottomNavigation extends StatefulWidget {
-  BottomNavigation({Key key}) : super(key: key);
+class BottomNavigationView extends StatefulWidget {
+  BottomNavigationView({Key key}) : super(key: key);
 
   @override
-  _BottomNavigationState createState() {
-    return _BottomNavigationState();
+  _BottomNavigationViewState createState() {
+    return _BottomNavigationViewState();
   }
 }
 
-class _BottomNavigationState extends State<BottomNavigation> {
+class _BottomNavigationViewState extends State<BottomNavigationView> {
   static List<Widget> _widgetOptions = <Widget>[
-    Account(),
-    TransactionHistory(),
-    MonthlyTotalStatsDetailed(),
-    Settings(),
+    AccountHomeView(),
+    TransactionHistoryView(),
+    MonthlyStatisticsView(),
+    SettingsView(),
   ];
 
   @override

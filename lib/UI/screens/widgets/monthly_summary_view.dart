@@ -5,14 +5,14 @@ import 'package:expenses/models/monthly_total.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MonthlyTotalStats extends StatefulWidget {
-  MonthlyTotalStats({Key key}) : super(key: key);
+class MonhtlySummaryView extends StatefulWidget {
+  MonhtlySummaryView({Key key}) : super(key: key);
 
   @override
-  _MonthlyTotalStatsState createState() => _MonthlyTotalStatsState();
+  _MonhtlySummaryViewState createState() => _MonhtlySummaryViewState();
 }
 
-class _MonthlyTotalStatsState extends State<MonthlyTotalStats> {
+class _MonhtlySummaryViewState extends State<MonhtlySummaryView> {
   @override
   Widget build(BuildContext context) {
     var _paddingWidth = MediaQuery.of(context).size.width * 0.03;

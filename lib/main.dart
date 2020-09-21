@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
               title: 'Budgee',
               debugShowCheckedModeBanner: false,
               theme: Styles.themeData(themeChangeProvider.isDarkTheme, context),
-              home: BottomNavigation(),
+              home: BottomNavigationView(),
             );
           },
         ),

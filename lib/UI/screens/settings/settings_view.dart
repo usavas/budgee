@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 
 import '../../themes/darktheme_provider.dart';
 
-class Settings extends StatefulWidget {
-  Settings({Key key}) : super(key: key);
+class SettingsView extends StatefulWidget {
+  SettingsView({Key key}) : super(key: key);
 
   @override
-  _SettingsState createState() => _SettingsState();
+  _SettingsViewState createState() => _SettingsViewState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
@@ -29,7 +29,9 @@ class _SettingsState extends State<Settings> {
                     themeChange.isDarkTheme = !themeChange.isDarkTheme;
                   },
                 ),
-                Padding(padding: EdgeInsets.only(right: 8),),
+                Padding(
+                  padding: EdgeInsets.only(right: 8),
+                ),
                 Text('Dark Theme'),
               ]),
             ),
