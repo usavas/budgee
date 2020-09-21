@@ -82,7 +82,7 @@ class TransactionInfoDtoList extends StatelessWidget {
               itemBuilder: (context, count) {
                 return Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
