@@ -1,5 +1,7 @@
 import 'package:expenses/UI/screens/providers/current_month_year_provider.dart';
+import 'package:expenses/UI/screens/providers/in_app_purchase_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:provider/provider.dart';
 
 import 'UI/screens/providers/mothly_totals_provider.dart';
@@ -11,7 +13,11 @@ void main() {
   // in order to prevent the error occuring on calling multipler providers in the same context
   // Provider.debugCheckInvalidValueType = null;
   // Admob.initialize(AdmobHelper.admobTestAppId);
+  InAppPurchaseConnection.enablePendingPurchases();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<InAppPurchaseProvider>(
+      create: (context) => InAppPurchaseProvider(),
+    ),
     ChangeNotifierProvider<MonthlyTotalsProvider>(
         create: (_) => MonthlyTotalsProvider()),
   ], child: MyApp()));

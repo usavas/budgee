@@ -1,3 +1,5 @@
+import 'package:expenses/UI/helper/in_app_purhcase_helper.dart';
+import 'package:expenses/UI/screens/providers/in_app_purchase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +14,19 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    final inAppPurchaseProvider = Provider.of<InAppPurchaseProvider>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -42,7 +55,10 @@ class _SettingsViewState extends State<SettingsView> {
                 children: <Widget>[
                   FlatButton(
                     child: Text('Remove the ads'),
-                    onPressed: () {},
+                    onPressed: () async {
+                      inAppPurchaseProvider
+                          .purchaseProduct(InAppPurchaseHelper.removeAdsId);
+                    },
                   ),
                 ],
               ),

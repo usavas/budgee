@@ -156,7 +156,6 @@ class TransactionTypeWidget extends StatelessWidget {
                       size: _iconSize,
                       color: _color,
                     ),
-                    // ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(6, 4, 6, 0),
@@ -175,6 +174,5 @@ class TransactionTypeWidget extends StatelessWidget {
         ),
       ),
     );
-    // );
   }
 }
