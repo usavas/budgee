@@ -25,8 +25,8 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
-    final inAppPurchaseProvider = Provider.of<InAppPurchaseProvider>(context);
+    final themeProvider = Provider.of<DarkThemeProvider>(context);
+    // final inAppPurchaseProvider = Provider.of<InAppPurchaseProvider>(context);
 
     return Scaffold(
       body: SafeArea(
@@ -34,12 +34,21 @@ class _SettingsViewState extends State<SettingsView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(children: <Widget>[
             Padding(
+                padding:
+                    EdgeInsets.only(right: 8, left: 8, top: 32, bottom: 12),
+                child: Text(
+                  'Settings',
+                  style: Theme.of(context).textTheme.bodyText1,
+                  textAlign: TextAlign.center,
+                )),
+            Divider(),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Switch(
-                  value: themeChange.isDarkTheme,
+                  value: themeProvider.isDarkTheme,
                   onChanged: (bool value) {
-                    themeChange.isDarkTheme = !themeChange.isDarkTheme;
+                    themeProvider.isDarkTheme = !themeProvider.isDarkTheme;
                   },
                 ),
                 Padding(
@@ -49,21 +58,21 @@ class _SettingsViewState extends State<SettingsView> {
               ]),
             ),
             Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: <Widget>[
-                  FlatButton(
-                    child: Text('Remove the ads'),
-                    onPressed: () async {
-                      inAppPurchaseProvider
-                          .purchaseProduct(InAppPurchaseHelper.removeAdsId);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Divider(),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            //   child: Row(
+            //     children: <Widget>[
+            //       FlatButton(
+            //         child: Text('Remove the ads'),
+            //         onPressed: () async {
+            //           inAppPurchaseProvider
+            //               .purchaseProduct(InAppPurchaseHelper.removeAdsId);
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Divider(),
           ]),
         ),
       ),
