@@ -17,60 +17,66 @@ class MonthlyStatisticsView extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
-            body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  BannerAdvertisementView(),
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                  ),
-                  CurrentMonthView(),
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                  ),
-                  Consumer<CurrentMonthYearProvider>(
-                    builder: (context, monthProvider, _) {
-                      return FutureBuilder<List<MonthlyTransactionTypesTotal>>(
-                          future: MonthlyTransactionTypesTotalsRepository()
-                              .getMonthlyExpenseTransactionTypesTotals(
-                                  monthProvider.currentYear,
-                                  monthProvider.currentMonth),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              print(
-                                  'monthly transaction type total stats: error occured');
-                              print(snapshot.error);
-                              return Center(
-                                child: Text(
-                                    'monthly transaction type total stats: error occured'),
-                              );
-                            } else if (snapshot.hasData) {
-                              return (snapshot.data != null &&
-                                      snapshot.data.length > 0)
-                                  ? Container(
-                                      color: Theme.of(context).backgroundColor,
-                                      padding: EdgeInsets.only(
-                                          left: edgeinsets, right: edgeinsets),
-                                      child: ExpenseChartPie(
-                                        _getDataMapFromTransactionTypeTotals(
-                                            snapshot.data),
-                                        [
-                                          ...snapshot.data.map((t) =>
-                                              Color(t.transactionTypeColor))
-                                        ],
-                                      )
-                                      // ExpenseChart.withSampleData(),
-                                      )
-                                  : Text('No transaction info for this month');
-                            } else {
-                              return Center(
-                                child: Text('Fetching...'),
-                              );
-                            }
-                          });
-                    },
-                  ),
-                ])));
+            body: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    BannerAdvertisementView(),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                    ),
+                    CurrentMonthView(),
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                    ),
+                    Consumer<CurrentMonthYearProvider>(
+                      builder: (context, monthProvider, _) {
+                        return FutureBuilder<
+                                List<MonthlyTransactionTypesTotal>>(
+                            future: MonthlyTransactionTypesTotalsRepository()
+                                .getMonthlyExpenseTransactionTypesTotals(
+                                    monthProvider.currentYear,
+                                    monthProvider.currentMonth),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                print(
+                                    'monthly transaction type total stats: error occured');
+                                print(snapshot.error);
+                                return Center(
+                                  child: Text(
+                                      'monthly transaction type total stats: error occured'),
+                                );
+                              } else if (snapshot.hasData) {
+                                return (snapshot.data != null &&
+                                        snapshot.data.length > 0)
+                                    ? Container(
+                                        color:
+                                            Theme.of(context).backgroundColor,
+                                        padding: EdgeInsets.only(
+                                            left: edgeinsets,
+                                            right: edgeinsets),
+                                        child: ExpenseChartPie(
+                                          _getDataMapFromTransactionTypeTotals(
+                                              snapshot.data),
+                                          [
+                                            ...snapshot.data.map((t) =>
+                                                Color(t.transactionTypeColor))
+                                          ],
+                                        )
+                                        // ExpenseChart.withSampleData(),
+                                        )
+                                    : Text(
+                                        'No transaction info for this month');
+                              } else {
+                                return Center(
+                                  child: Text('Fetching...'),
+                                );
+                              }
+                            });
+                      },
+                    ),
+                  ]),
+            )));
   }
 
   Map<String, double> _getDataMapFromTransactionTypeTotals(
